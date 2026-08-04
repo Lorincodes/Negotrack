@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-04T13:33:37.888Z",
+  "title": "Design System: NegoTrack",
+  "extensions": {
+    "colorMeta": {
+      "background": {
+        "role": "neutral",
+        "displayName": "Daylight White",
+        "canonical": "#ffffff",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(37% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(73% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Cool Canvas",
+        "canonical": "#f7f8fc",
+        "tonalRamp": ["oklch(15% 0.005 275)", "oklch(26% 0.005 275)", "oklch(37% 0.005 275)", "oklch(49% 0.005 275)", "oklch(61% 0.005 275)", "oklch(73% 0.005 275)", "oklch(84% 0.005 275)", "oklch(95% 0.005 275)"]
+      },
+      "surface-strong": {
+        "role": "neutral",
+        "displayName": "Mint Wash",
+        "canonical": "#eef8f5",
+        "tonalRamp": ["oklch(15% 0.011 176.3)", "oklch(26% 0.011 176.3)", "oklch(37% 0.011 176.3)", "oklch(49% 0.011 176.3)", "oklch(61% 0.011 176.3)", "oklch(73% 0.011 176.3)", "oklch(84% 0.011 176.3)", "oklch(95% 0.011 176.3)"]
+      },
+      "heading": {
+        "role": "neutral",
+        "displayName": "Midnight Heading",
+        "canonical": "#111b3a",
+        "tonalRamp": ["oklch(15% 0.061 268)", "oklch(26% 0.061 268)", "oklch(37% 0.061 268)", "oklch(49% 0.061 268)", "oklch(61% 0.061 268)", "oklch(73% 0.061 268)", "oklch(84% 0.061 268)", "oklch(95% 0.061 268)"]
+      },
+      "body": {
+        "role": "neutral",
+        "displayName": "Slate Body",
+        "canonical": "#536077",
+        "tonalRamp": ["oklch(15% 0.04 261.8)", "oklch(26% 0.04 261.8)", "oklch(37% 0.04 261.8)", "oklch(49% 0.04 261.8)", "oklch(61% 0.04 261.8)", "oklch(73% 0.04 261.8)", "oklch(84% 0.04 261.8)", "oklch(95% 0.04 261.8)"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "canonical": "#78849a",
+        "tonalRamp": ["oklch(15% 0.036 262.6)", "oklch(26% 0.036 262.6)", "oklch(37% 0.036 262.6)", "oklch(49% 0.036 262.6)", "oklch(61% 0.036 262.6)", "oklch(73% 0.036 262.6)", "oklch(84% 0.036 262.6)", "oklch(95% 0.036 262.6)"]
+      },
+      "dark": {
+        "role": "neutral",
+        "displayName": "Deep Midnight",
+        "canonical": "#061525",
+        "tonalRamp": ["oklch(15% 0.039 251.1)", "oklch(26% 0.039 251.1)", "oklch(37% 0.039 251.1)", "oklch(49% 0.039 251.1)", "oklch(61% 0.039 251.1)", "oklch(73% 0.039 251.1)", "oklch(84% 0.039 251.1)", "oklch(95% 0.039 251.1)"]
+      },
+      "green": {
+        "role": "primary",
+        "displayName": "Growth Green",
+        "canonical": "#13c98a",
+        "tonalRamp": ["oklch(15% 0.161 161.5)", "oklch(26% 0.161 161.5)", "oklch(37% 0.161 161.5)", "oklch(49% 0.161 161.5)", "oklch(61% 0.161 161.5)", "oklch(73% 0.161 161.5)", "oklch(84% 0.161 161.5)", "oklch(95% 0.161 161.5)"]
+      },
+      "green-strong": {
+        "role": "primary",
+        "displayName": "Strong Growth Green",
+        "canonical": "#0ba675",
+        "tonalRamp": ["oklch(15% 0.136 163.3)", "oklch(26% 0.136 163.3)", "oklch(37% 0.136 163.3)", "oklch(49% 0.136 163.3)", "oklch(61% 0.136 163.3)", "oklch(73% 0.136 163.3)", "oklch(84% 0.136 163.3)", "oklch(95% 0.136 163.3)"]
+      },
+      "mint": {
+        "role": "primary",
+        "displayName": "Action Mint",
+        "canonical": "#61e6c1",
+        "tonalRamp": ["oklch(15% 0.129 171.9)", "oklch(26% 0.129 171.9)", "oklch(37% 0.129 171.9)", "oklch(49% 0.129 171.9)", "oklch(61% 0.129 171.9)", "oklch(73% 0.129 171.9)", "oklch(84% 0.129 171.9)", "oklch(95% 0.129 171.9)"]
+      },
+      "teal": {
+        "role": "primary",
+        "displayName": "Signal Teal",
+        "canonical": "#20bfc8",
+        "tonalRamp": ["oklch(15% 0.12 201.1)", "oklch(26% 0.12 201.1)", "oklch(37% 0.12 201.1)", "oklch(49% 0.12 201.1)", "oklch(61% 0.12 201.1)", "oklch(73% 0.12 201.1)", "oklch(84% 0.12 201.1)", "oklch(95% 0.12 201.1)"]
+      },
+      "blue": {
+        "role": "secondary",
+        "displayName": "Analytic Blue",
+        "canonical": "#4a78ff",
+        "tonalRamp": ["oklch(15% 0.207 266.2)", "oklch(26% 0.207 266.2)", "oklch(37% 0.207 266.2)", "oklch(49% 0.207 266.2)", "oklch(61% 0.207 266.2)", "oklch(73% 0.207 266.2)", "oklch(84% 0.207 266.2)", "oklch(95% 0.207 266.2)"]
+      },
+      "purple": {
+        "role": "secondary",
+        "displayName": "Comparative Violet",
+        "canonical": "#8a5cff",
+        "tonalRamp": ["oklch(15% 0.229 291)", "oklch(26% 0.229 291)", "oklch(37% 0.229 291)", "oklch(49% 0.229 291)", "oklch(61% 0.229 291)", "oklch(73% 0.229 291)", "oklch(84% 0.229 291)", "oklch(95% 0.229 291)"]
+      },
+      "amber": {
+        "role": "tertiary",
+        "displayName": "Caution Amber",
+        "canonical": "#e39a24",
+        "tonalRamp": ["oklch(15% 0.148 72.9)", "oklch(26% 0.148 72.9)", "oklch(37% 0.148 72.9)", "oklch(49% 0.148 72.9)", "oklch(61% 0.148 72.9)", "oklch(73% 0.148 72.9)", "oklch(84% 0.148 72.9)", "oklch(95% 0.148 72.9)"]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Hairline Grey",
+        "canonical": "#e7eaf0",
+        "tonalRamp": ["oklch(15% 0.009 264.5)", "oklch(26% 0.009 264.5)", "oklch(37% 0.009 264.5)", "oklch(49% 0.009 264.5)", "oklch(61% 0.009 264.5)", "oklch(73% 0.009 264.5)", "oklch(84% 0.009 264.5)", "oklch(95% 0.009 264.5)"]
+      },
+      "border-strong": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "canonical": "#dbe1ea",
+        "tonalRamp": ["oklch(15% 0.014 258.3)", "oklch(26% 0.014 258.3)", "oklch(37% 0.014 258.3)", "oklch(49% 0.014 258.3)", "oklch(61% 0.014 258.3)", "oklch(73% 0.014 258.3)", "oklch(84% 0.014 258.3)", "oklch(95% 0.014 258.3)"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero positioning and the strongest single promise."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section-level orientation and major explanatory transitions."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Cards, forms, modal-scale panels, and product-preview headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Plain-language explanation and supporting business context."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Short demonstration, status, and metadata signals."
+      }
+    },
+    "shadows": [
+      {
+        "name": "ambient-small",
+        "value": "0 8px 24px rgba(26, 39, 71, 0.06)",
+        "purpose": "Light lift for trust rails, icon tiles, and quiet secondary controls."
+      },
+      {
+        "name": "ambient-medium",
+        "value": "0 22px 60px rgba(26, 39, 71, 0.1)",
+        "purpose": "Larger comparison and content stages."
+      },
+      {
+        "name": "product-hero",
+        "value": "0 34px 90px rgba(40, 57, 91, 0.14)",
+        "purpose": "Flagship coded product frames only."
+      },
+      {
+        "name": "primary-action-rest",
+        "value": "0 9px 24px rgba(19, 201, 138, 0.2)",
+        "purpose": "Mint action at rest."
+      },
+      {
+        "name": "primary-action-hover",
+        "value": "0 13px 30px rgba(19, 201, 138, 0.28)",
+        "purpose": "Mint action while hovered."
+      },
+      {
+        "name": "dark-action",
+        "value": "0 12px 28px rgba(6, 21, 37, 0.18)",
+        "purpose": "Deep-midnight form actions."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default easing for lift, reveal, drawer, and product-preview motion."
+      },
+      {
+        "name": "reveal-soft",
+        "value": "540ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "A 14px vertical reveal for section content; disabled for reduced motion."
+      },
+      {
+        "name": "state-shift",
+        "value": "250ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Buttons, selector lift, and active-state transitions."
+      },
+      {
+        "name": "product-settle",
+        "value": "500ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Perspective correction and lift on interactive product frames."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "1120px"
+      },
+      {
+        "name": "tablet",
+        "value": "900px"
+      },
+      {
+        "name": "mobile",
+        "value": "680px"
+      },
+      {
+        "name": "compact",
+        "value": "430px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main acquisition and forward-action control.",
+      "html": "<button class=\"ds-btn-primary\">Join the private beta<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\" /></svg></button>",
+      "css": ".ds-btn-primary { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 0 20px; border: 1px solid transparent; border-radius: var(--radius-control); background: var(--mint); color: #04271c; font-family: var(--font-body), Inter, sans-serif; font-size: .91rem; font-weight: 760; cursor: pointer; box-shadow: 0 9px 24px rgba(19,201,138,.2); transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out), background .25s ease; } .ds-btn-primary svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; } .ds-btn-primary:hover { transform: translateY(-2px); background: #72eac8; box-shadow: 0 13px 30px rgba(19,201,138,.28); } .ds-btn-primary:active { transform: translateY(0); } .ds-btn-primary:focus-visible { outline: 3px solid rgba(74,120,255,.42); outline-offset: 3px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "A quieter product-exploration action with a contained signal icon.",
+      "html": "<button class=\"ds-btn-secondary\"><span><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\" /></svg></span>See how it works</button>",
+      "css": ".ds-btn-secondary { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 0 20px; border: 1px solid var(--border-strong); border-radius: var(--radius-control); background: var(--background); color: var(--heading); font-family: var(--font-body), Inter, sans-serif; font-size: .91rem; font-weight: 760; cursor: pointer; box-shadow: var(--shadow-sm); transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out), border-color .25s ease; } .ds-btn-secondary > span { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: #eafaf5; color: var(--green-strong); } .ds-btn-secondary svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; } .ds-btn-secondary:hover { transform: translateY(-2px); border-color: #cfd8e4; } .ds-btn-secondary:active { transform: translateY(0); } .ds-btn-secondary:focus-visible { outline: 3px solid rgba(74,120,255,.42); outline-offset: 3px; }"
+    },
+    {
+      "name": "Dark Button",
+      "kind": "button",
+      "refersTo": "button-dark",
+      "description": "The decisive submit action inside a daylight form or card.",
+      "html": "<button class=\"ds-btn-dark\">Request early access<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\" /></svg></button>",
+      "css": ".ds-btn-dark { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 0 20px; border: 1px solid transparent; border-radius: var(--radius-control); background: var(--dark); color: var(--background); font-family: var(--font-body), Inter, sans-serif; font-size: .91rem; font-weight: 760; cursor: pointer; box-shadow: 0 12px 28px rgba(6,21,37,.18); transition: transform .25s var(--ease-out), background .25s ease; } .ds-btn-dark svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; } .ds-btn-dark:hover { transform: translateY(-2px); background: #102b43; } .ds-btn-dark:active { transform: translateY(0); } .ds-btn-dark:focus-visible { outline: 3px solid rgba(74,120,255,.42); outline-offset: 3px; } .ds-btn-dark:disabled { opacity: .62; cursor: not-allowed; transform: none; }"
+    },
+    {
+      "name": "Waitlist Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "The canonical labelled field with focus, invalid, and disabled states.",
+      "html": "<label class=\"ds-field\"><span>Email address</span><input type=\"email\" placeholder=\"you@business.co.uk\" /></label>",
+      "css": ".ds-field { display: grid; gap: 6px; color: #46536a; font-family: var(--font-body), Inter, sans-serif; font-size: .62rem; font-weight: 720; } .ds-field input { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: 9px; background: var(--background); color: var(--heading); outline: none; font: inherit; font-size: .86rem; font-weight: 400; transition: border-color .2s, box-shadow .2s; } .ds-field input:focus { border-color: #73cdb5; box-shadow: 0 0 0 3px rgba(19,201,138,.1); } .ds-field input:focus-visible { outline: 3px solid rgba(74,120,255,.42); outline-offset: 3px; } .ds-field input[aria-invalid=\"true\"] { border-color: #d26f65; } .ds-field input:disabled { background: var(--surface); color: var(--muted); cursor: not-allowed; }"
+    },
+    {
+      "name": "Primary Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "The fixed daylight navigation with product links, locale control, and an acquisition action.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Primary navigation\"><a class=\"ds-nav-logo\" href=\"#\">Nego<span>Track</span></a><div class=\"ds-nav-links\"><a href=\"#product\">Product</a><a href=\"#solutions\">Solutions</a><a href=\"#how\">How it works</a></div><a class=\"ds-nav-language\" href=\"#\">EN</a></nav>",
+      "css": ".ds-nav { min-height: 76px; display: flex; align-items: center; gap: 42px; padding: 0 24px; border-bottom: 1px solid rgba(231,234,240,.82); background: rgba(255,255,255,.94); color: var(--heading); font-family: var(--font-body), Inter, sans-serif; backdrop-filter: blur(14px); } .ds-nav-logo { color: var(--heading); font-family: var(--font-display), 'Plus Jakarta Sans', sans-serif; font-size: 1.28rem; font-weight: 800; letter-spacing: -.045em; text-decoration: none; } .ds-nav-logo span { color: var(--green-strong); } .ds-nav-links { display: flex; align-items: center; gap: 29px; margin-left: auto; } .ds-nav-links a { position: relative; color: #3e4c65; font-size: .84rem; font-weight: 650; text-decoration: none; } .ds-nav-links a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: -8px; height: 2px; background: var(--green); transition: right .25s var(--ease-out); } .ds-nav-links a:hover::after { right: 0; } .ds-nav-language { min-height: 40px; display: inline-flex; align-items: center; padding: 0 10px; border: 1px solid var(--border); border-radius: 9px; color: #3c4961; font-size: .78rem; font-weight: 750; text-decoration: none; } .ds-nav a:focus-visible { outline: 3px solid rgba(74,120,255,.42); outline-offset: 3px; }"
+    },
+    {
+      "name": "Demo Badge",
+      "kind": "chip",
+      "refersTo": "badge-demo",
+      "description": "An explicit label for synthetic or preview product data.",
+      "html": "<span class=\"ds-demo-badge\"><i aria-hidden=\"true\"></i>Demonstration data</span>",
+      "css": ".ds-demo-badge { width: fit-content; display: inline-flex; align-items: center; gap: 8px; color: #087b60; font-family: var(--font-body), Inter, sans-serif; font-size: .69rem; font-weight: 780; letter-spacing: .045em; text-transform: uppercase; } .ds-demo-badge i { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(19,201,138,.12); }"
+    },
+    {
+      "name": "Segmented Tabs",
+      "kind": "custom",
+      "refersTo": "tab-selected",
+      "description": "A compact track for switching between product-preview categories.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\"><button role=\"tab\" aria-selected=\"true\">Overview</button><button role=\"tab\" aria-selected=\"false\">Visibility</button><button role=\"tab\" aria-selected=\"false\">Reviews</button></div>",
+      "css": ".ds-tabs { width: fit-content; display: flex; gap: 5px; padding: 4px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); } .ds-tabs button { min-height: 38px; padding: 0 16px; border: 0; border-radius: 8px; background: transparent; color: #677388; font-family: var(--font-body), Inter, sans-serif; font-size: .72rem; font-weight: 710; cursor: pointer; transition: background .25s ease, color .25s ease, transform .25s var(--ease-out); } .ds-tabs button[aria-selected=\"true\"] { background: var(--dark); color: var(--background); box-shadow: 0 8px 18px rgba(6,21,37,.15); } .ds-tabs button:hover { transform: translateY(-1px); } .ds-tabs button:active { transform: translateY(0); } .ds-tabs button:focus-visible { outline: 3px solid rgba(74,120,255,.42); outline-offset: 3px; }"
+    },
+    {
+      "name": "Feature Card",
+      "kind": "card",
+      "refersTo": "card-feature",
+      "description": "A bordered product-capability card with a coded preview and compact explanation.",
+      "html": "<article class=\"ds-feature-card\"><div class=\"ds-feature-preview\"><span><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 19V9M10 19V5M16 19v-7M22 19V2\" /></svg></span><div class=\"ds-feature-bars\"><i></i><i></i><i></i><i></i></div></div><div class=\"ds-feature-copy\"><span>Website health</span><h3>See what needs attention first</h3><p>Turn scattered signals into a clear, ordered action.</p></div></article>",
+      "css": ".ds-feature-card { width: min(320px,100%); overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--background); color: var(--body); font-family: var(--font-body), Inter, sans-serif; } .ds-feature-preview { position: relative; height: 176px; display: grid; place-items: center; overflow: hidden; border-bottom: 1px solid var(--border); background: #f7f9fc; } .ds-feature-preview > span { position: absolute; top: 14px; left: 14px; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 9px; background: var(--background); color: var(--green-strong); box-shadow: var(--shadow-sm); } .ds-feature-preview svg { width: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; } .ds-feature-bars { height: 80px; display: flex; align-items: flex-end; gap: 9px; } .ds-feature-bars i { width: 18px; height: 34%; border-radius: 4px 4px 2px 2px; background: #b8c8ff; } .ds-feature-bars i:nth-child(2) { height: 54%; background: #8fa7ff; } .ds-feature-bars i:nth-child(3) { height: 72%; background: var(--mint); } .ds-feature-bars i:nth-child(4) { height: 95%; background: var(--green); } .ds-feature-copy { padding: 21px; } .ds-feature-copy > span { color: #087b60; font-size: .62rem; font-weight: 760; letter-spacing: .05em; text-transform: uppercase; } .ds-feature-copy h3 { margin: 7px 0 0; color: var(--heading); font-family: var(--font-display), 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; font-weight: 760; letter-spacing: -.032em; } .ds-feature-copy p { margin: 10px 0 0; font-size: .75rem; line-height: 1.7; }"
+    },
+    {
+      "name": "Product Frame",
+      "kind": "custom",
+      "refersTo": "card-product",
+      "description": "The signature browser-like canvas for honest coded product demonstrations.",
+      "html": "<section class=\"ds-product-frame\"><div class=\"ds-product-chrome\"><i></i><i></i><i></i><span>app.negotrack.com</span><em>Preview</em></div><div class=\"ds-product-body\"><small>Business overview</small><div class=\"ds-product-metric\"><span>Business health</span><strong>86</strong><b>Good</b></div><div class=\"ds-product-progress\"><i></i></div></div></section>",
+      "css": ".ds-product-frame { width: min(520px,100%); overflow: hidden; border: 1px solid #e3e7ee; border-radius: var(--radius-panel); background: var(--background); color: var(--body); font-family: var(--font-body), Inter, sans-serif; box-shadow: var(--shadow-product); } .ds-product-chrome { position: relative; height: 34px; display: flex; align-items: center; gap: 5px; padding: 0 11px; border-bottom: 1px solid #eef0f4; background: #fbfcfe; } .ds-product-chrome > i { width: 6px; height: 6px; border-radius: 50%; background: #ffb6a8; } .ds-product-chrome > i:nth-child(2) { background: #ffe096; } .ds-product-chrome > i:nth-child(3) { background: #a8e4ce; } .ds-product-chrome > span { position: absolute; left: 50%; width: 140px; padding: 4px 8px; transform: translateX(-50%); border-radius: 5px; background: #f0f3f7; color: #737f91; text-align: center; font-size: .49rem; } .ds-product-chrome > em { margin-left: auto; color: #087b60; font-size: .5rem; font-style: normal; font-weight: 800; letter-spacing: .045em; text-transform: uppercase; } .ds-product-body { padding: 18px; } .ds-product-body > small { color: #667287; font-size: .58rem; } .ds-product-metric { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; margin-top: 16px; padding: 16px; border: 1px solid #edf0f4; border-radius: 10px; box-shadow: 0 5px 16px rgba(29,43,70,.035); } .ds-product-metric > span { grid-column: 1 / -1; color: #48566d; font-size: .6rem; font-weight: 720; } .ds-product-metric > strong { color: var(--heading); font-family: var(--font-display), 'Plus Jakarta Sans', sans-serif; font-size: 1.45rem; } .ds-product-metric > b { align-self: end; color: #078b66; font-size: .54rem; } .ds-product-progress { height: 7px; margin-top: 18px; overflow: hidden; border-radius: 8px; background: #e6ebf1; } .ds-product-progress i { display: block; width: 86%; height: 100%; border-radius: inherit; background: linear-gradient(90deg,var(--green),var(--teal),var(--blue)); } .ds-product-frame:hover { transform: translateY(-3px); box-shadow: 0 40px 100px rgba(40,57,91,.17); transition: transform .5s var(--ease-out), box-shadow .5s ease; } .ds-product-frame:focus-within { outline: 3px solid rgba(74,120,255,.42); outline-offset: 3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Daylight Growth Console",
+    "overview": "NegoTrack should feel like a clear working session in daylight: spacious, calm, and immediately useful. Midnight navy gives every decision weight, while mint and teal make improvement visible as an operative signal rather than decoration. Blue, purple, and amber add just enough analytic distinction to make complex business health legible at a glance.\n\nThe system is product-led and evidence-forward. Coded consoles, health scores, charts, priorities, and clearly labelled demonstration states carry the story inside soft white canvases with hairline structure. It deliberately rejects the generic centred SaaS hero and decorative AI branding; decisive copy and honest product evidence share the frame instead.",
+    "keyCharacteristics": [
+      "Daylight white space with midnight-navy authority.",
+      "Mint and teal actions supported by blue, purple, and amber analytic signals.",
+      "Plus Jakarta Sans for orientation; Inter for reading and control copy.",
+      "Hairline borders, gently rounded canvases, and soft navy-tinted lift.",
+      "Responsive coded-product previews that remain honest about demonstration data."
+    ],
+    "rules": [
+      {
+        "name": "The Operative Mint Rule",
+        "body": "Mint and teal signal action or improvement; blue and purple distinguish analytic series, and amber communicates caution or pending work.",
+        "section": "colors"
+      },
+      {
+        "name": "The Daylight Default Rule",
+        "body": "White and near-white own the page. Deep midnight is reserved for high-contrast demonstrations and selected states, not used as the universal backdrop.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Voice Rule",
+        "body": "Plus Jakarta Sans carries orientation and emphasis; Inter carries reading, navigation, labels, and controls.",
+        "section": "typography"
+      },
+      {
+        "name": "The Soft Canvas Rule",
+        "body": "Hairlines and tonal fills do the everyday structural work. Reserve strong shadows for product evidence, selected state, or a direct response to interaction.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use mint and teal for action and improvement, blue and purple for distinct analytic series, and amber for caution or pending work.",
+      "Do lead with decisive copy and a coded product preview when a marketing surface must explain value quickly.",
+      "Do label synthetic interfaces and demonstration data explicitly.",
+      "Do preserve 48px primary controls, 44px fields, visible focus, and the established responsive reductions.",
+      "Do use hairline structure first and reserve the strongest lift for flagship product evidence."
+    ],
+    "donts": [
+      "Don't fall back to a generic centred SaaS hero when product evidence can share the first viewport.",
+      "Don't add decorative AI motifs, generic glow fields, or futuristic chrome that does not communicate a product state.",
+      "Don't redraw or invent the production logo; keep the text placeholder until the approved asset exists.",
+      "Don't flood the page with deep-midnight surfaces or use every accent on every component.",
+      "Don't present demonstration metrics as live, customer-derived, or operational evidence."
+    ]
+  }
+}
