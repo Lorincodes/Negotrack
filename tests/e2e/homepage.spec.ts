@@ -66,9 +66,11 @@ test("the root URL redirects to the English homepage", async ({ page }) => {
 });
 
 test("localised nested routes survive a direct load and refresh", async ({ page }) => {
+  // Headings are matched loosely: these assert the route resolved and rendered
+  // its own page, not the exact marketing copy, which is expected to change.
   const routes = [
-    { path: "/en-GB/privacy", heading: "Privacy" },
-    { path: "/es-ES/guides", heading: "Guías" },
+    { path: "/en-GB/privacy", heading: /Privacy/ },
+    { path: "/es-ES/guides", heading: /preguntas que se hacen de verdad/ },
   ] as const;
 
   for (const route of routes) {

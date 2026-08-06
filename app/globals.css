@@ -1229,6 +1229,16 @@ ul.guide__list { list-style: disc; }
 .page-card svg { width: 15px; flex: 0 0 auto; color: var(--green-strong); }
 .page-card p { margin-top: 8px; color: var(--body); font-size: .91rem; line-height: 1.6; }
 
+/* Reading column for guides and info pages. Narrower than the marketing
+   container because these are read start to finish rather than scanned. */
+.article { max-width: 720px; }
+.article__section + .article__section { margin-top: 42px; }
+.article__section h2 { font-size: clamp(1.5rem, 2.6vw, 1.9rem); line-height: 1.15; letter-spacing: -0.034em; text-wrap: balance; }
+.article__section p { max-width: 68ch; margin-top: 14px; color: var(--body); font-size: 1rem; line-height: 1.75; }
+.article__section .guide__list { margin-top: 18px; }
+.page-hero--article h1 { max-width: 22ch; }
+.page-hero--article .page-hero__lead { max-width: 66ch; }
+
 .page-cards--wide { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 0; }
 .planned-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
 .planned-list li { padding: 8px 14px; border: 1px solid var(--border); border-radius: var(--radius-pill); background: white; color: var(--meta); font-size: .91rem; font-weight: 600; }

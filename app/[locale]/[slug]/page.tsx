@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
-import { DemoBadge, Logo } from "@/components/marketing/ui";
-import { isLocale, locales, type Locale } from "@/lib/i18n";
+import { Navigation } from "@/components/marketing/navigation";
+import { Footer } from "@/components/marketing/footer";
+import { DemoBadge } from "@/components/marketing/ui";
+import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
 
 type PageCopy = {
   title: string;
@@ -273,32 +275,69 @@ export default async function InfoPage({ params }: PageProps) {
     })),
   };
 
+  const dictionary = getDictionary(locale);
+  const spanish = locale === "es-ES";
+  const t = spanish
+    ? { badge: "Información de lanzamiento", faq: "Preguntas frecuentes", cta: "Únete a la lista de espera",
+        ctaBody: "NegoTrack está en desarrollo. Apúntate y te avisamos cuando abra la beta privada." }
+    : { badge: "Launch information", faq: "Frequently asked questions", cta: "Join the waiting list",
+        ctaBody: "NegoTrack is in development. Join the list and we will tell you when the private beta opens." };
+
   return (
-    <main className="info-page">
+    <div className="site-shell" data-locale={locale}>
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       {faqSchema && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, "\\u003c") }}
         />
       )}
-      <div className="container info-page__inner">
-        <Link href={`/${locale}`} aria-label="NegoTrack home"><Logo /></Link>
-        <div style={{ marginTop: 56 }}>
-          <DemoBadge>{locale === "es-ES" ? "Información de lanzamiento" : "Launch information"}</DemoBadge>
-        </div>
-        <h1>{content.title}</h1>
-        <h2 style={{ marginTop: 20, fontSize: "1.25rem" }}>{content.lead}</h2>
-        {content.body.map((paragraph) => <p key={paragraph.slice(0, 40)}>{paragraph}</p>)}
-        {content.faq?.map(({ q, a }) => (
-          <section key={q}>
-            <h2 style={{ marginTop: 32, fontSize: "1.25rem" }}>{q}</h2>
-            <p>{a}</p>
-          </section>
-        ))}
-        <Link className="button button--secondary" href={`/${locale}`}>
-          <ArrowLeft aria-hidden="true" />{locale === "es-ES" ? "Volver al inicio" : "Back to homepage"}
-        </Link>
-      </div>
-    </main>
+      <Navigation locale={locale} copy={dictionary.navigation} />
+
+      <main id="main-content">
+        <section className="page-hero page-hero--article">
+          <div className="page-hero__atmosphere" aria-hidden="true">
+            <div className="hero-orb hero-orb--one" />
+            <div className="hero-orb hero-orb--two" />
+          </div>
+          <div className="container page-hero__inner">
+            <h1>{content.title}</h1>
+            <p className="page-hero__lead">{content.lead}</p>
+            <div className="page-hero__badge"><DemoBadge>{t.badge}</DemoBadge></div>
+          </div>
+        </section>
+
+        <section className="section page-section">
+          <div className="container article">
+            <div className="article__section">
+              {content.body.map((paragraph) => <p key={paragraph.slice(0, 40)}>{paragraph}</p>)}
+            </div>
+
+            {content.faq && (
+              <section className="article__section">
+                <h2>{t.faq}</h2>
+                <div className="page-faq">
+                  {content.faq.map(({ q, a }) => <div key={q}><h3>{q}</h3><p>{a}</p></div>)}
+                </div>
+              </section>
+            )}
+          </div>
+        </section>
+
+        <section className="section section--cta">
+          <div className="container">
+            <div className="page-cta">
+              <h2>{t.cta}</h2>
+              <p>{t.ctaBody}</p>
+              <Link className="button button--primary" href={`/${locale}#early-access`}>
+                {dictionary.navigation.join}<ArrowUpRight aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer locale={locale} copy={dictionary.footer} />
+    </div>
   );
 }
