@@ -1,4 +1,5 @@
 import { analyticsConfig, hasClarity, hasGoogleAnalytics } from "./config";
+import { hasAnalyticsConsent } from "./consent";
 import { eventParams, type AnalyticsEvent, type AnalyticsProvider } from "./events";
 
 type GtagFn = (...args: unknown[]) => void;
@@ -62,8 +63,13 @@ const clarity: AnalyticsProvider = {
 /**
  * Only configured providers are registered, so an unset measurement ID means
  * that provider's code never runs rather than failing at the call site.
+ *
+ * Consent is checked here rather than at each call site: this one gate covers
+ * every event in the application, and a visitor who declines produces no
+ * reporting anywhere without a single `if` elsewhere in the codebase.
  */
 export function activeProviders(): AnalyticsProvider[] {
+  if (!hasAnalyticsConsent()) return [];
   const providers: AnalyticsProvider[] = [];
   if (hasGoogleAnalytics) providers.push(googleAnalytics);
   if (hasClarity) providers.push(clarity);

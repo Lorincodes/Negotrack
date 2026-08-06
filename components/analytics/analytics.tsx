@@ -4,6 +4,7 @@ import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef } from "react";
 import { analyticsConfig, hasClarity, hasGoogleAnalytics } from "@/lib/analytics/config";
+import { useConsent } from "@/lib/analytics/use-consent";
 import { track, trackPageView } from "@/lib/analytics/providers";
 
 /**
@@ -15,16 +16,22 @@ import { track, trackPageView } from "@/lib/analytics/providers";
  * drops this component's provider branches from development builds entirely.
  */
 export function Analytics() {
+  const granted = useConsent() === "granted";
+
   return (
     <>
-      <AnalyticsScripts />
-      {/* useSearchParams needs a Suspense boundary or it opts the whole route
-          into client rendering. */}
-      <Suspense fallback={null}>
-        <PageViewTracker />
-      </Suspense>
-      <ScrollDepthTracker />
-      <ExternalLinkTracker />
+      {/* Prior consent: no provider script is requested until the visitor
+          accepts, so nothing is set on their device before they choose. */}
+      {granted && <AnalyticsScripts />}
+      {granted && (
+        // useSearchParams needs a Suspense boundary or it opts the whole route
+        // into client rendering.
+        <Suspense fallback={null}>
+          <PageViewTracker />
+        </Suspense>
+      )}
+      {granted && <ScrollDepthTracker />}
+      {granted && <ExternalLinkTracker />}
     </>
   );
 }

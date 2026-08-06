@@ -5,6 +5,7 @@ import { useState, type CSSProperties, type FormEvent } from "react";
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, HeartHandshake, Languages, LockKeyhole, MapPin, ShieldCheck, Sparkles } from "lucide-react";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { track } from "@/lib/analytics";
+import { ConsentBanner } from "@/components/analytics/consent-banner";
 import { Navigation } from "./navigation";
 import { AvatarMark, Logo, Reveal, useAmbientRegion } from "./ui";
 import { HeroShowcase } from "./hero-showcase";
@@ -94,6 +95,9 @@ export function MarketingPage({ locale, dictionary: copy }: { locale: Locale; di
         </section>
       </main>
       <Footer locale={locale} copy={copy.footer} />
+      {/* Mounted here rather than in the root layout so the request is asked in
+          the visitor's own language. */}
+      <ConsentBanner locale={locale} copy={copy.consent} />
     </div>
   );
 }

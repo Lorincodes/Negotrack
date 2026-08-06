@@ -429,6 +429,13 @@ const en = {
     },
     rights: "© 2026 NegoTrack. All rights reserved.",
   },
+  consent: {
+    title: "Help us improve NegoTrack",
+    body: "We would like to use analytics cookies to understand how visitors use this site. They are optional, and nothing loads until you choose.",
+    accept: "Accept analytics",
+    decline: "Decline",
+    privacy: "Privacy notice",
+  },
 } as const;
 
 type Localized<T> = T extends string
@@ -732,6 +739,13 @@ const es: Localized<typeof en> = {
     summary: "Inteligencia de negocio con IA para pequeñas empresas del Reino Unido y España.", product: "Producto", solutions: "Soluciones", resources: "Recursos", company: "Empresa", stay: "Mantente al día", stayBody: "Recibe novedades e invitaciones de acceso anticipado.", email: "Tu correo",
     links: { overview: "Resumen", features: "Funciones", how: "Cómo funciona", early: "Acceso anticipado", small: "Pequeñas empresas", agencies: "Agencias", local: "Negocios locales", uk: "Reino Unido", spain: "España", blog: "Blog", guides: "Guías", help: "Centro de ayuda", status: "Estado", about: "Acerca de", contact: "Contacto", privacy: "Privacidad", terms: "Términos" },
     rights: "© 2026 NegoTrack. Todos los derechos reservados.",
+  },
+  consent: {
+    title: "Ayúdanos a mejorar NegoTrack",
+    body: "Nos gustaría usar cookies analíticas para entender cómo se usa esta web. Son opcionales y no se carga nada hasta que decidas.",
+    accept: "Aceptar analíticas",
+    decline: "Rechazar",
+    privacy: "Aviso de privacidad",
   },
 };
 

@@ -145,13 +145,32 @@ and would otherwise flood the stream with events no visitor caused. And
 `form_validation_error` reports **field names only**; the values a visitor typed
 are never sent to any provider.
 
-## 8. Privacy note
+## 8. Consent
 
-No analytics consent banner is implemented. GA4 and Clarity both set cookies and
-Clarity records session replays, which in the UK and Spain generally requires
-consent under PECR and the ePrivacy Directive before the scripts load — the
-waitlist form already collects an explicit privacy consent for registration, but
-that is a separate lawful basis and does not cover analytics cookies. Before
-enabling these in production for real EU/UK traffic, get advice on whether you
-need a consent gate. The provider registry is the natural place for one: gate
-`activeProviders()` on stored consent and no call site changes.
+Analytics is behind **prior consent**: no provider script is requested until the
+visitor accepts. UK PECR and the Spanish transposition of the ePrivacy Directive
+require consent *before* non-essential cookies are set, and Clarity records
+session replays, so a notice-only banner would not be sufficient.
+
+The gate is in one place — `activeProviders()` returns an empty list without
+consent, so declining silences every event in the application without a single
+check at a call site.
+
+| Visitor state | Banner | Provider scripts |
+| --- | --- | --- |
+| Has not answered | shown | none requested |
+| Accepted | hidden | loaded |
+| Declined | hidden | none requested, permanently |
+
+The answer is stored in `localStorage` under `negotrack.analytics-consent` and
+survives reloads. To re-test the banner, clear that key.
+
+The waitlist form's privacy consent is a **separate lawful basis** covering
+registration data, and deliberately does not imply analytics consent.
+
+Two things this does not do, which you should decide on before relying on it
+legally: there is no way for a visitor to change their mind after answering
+(a "cookie settings" link in the footer would be the usual place), and declining
+is remembered on that device only. Neither is required for the scripts to be
+gated correctly, but both are common expectations in a full consent solution,
+and this has not been reviewed by anyone qualified in data protection law.
