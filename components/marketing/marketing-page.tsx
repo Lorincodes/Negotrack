@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useState, type CSSProperties, type FormEvent } from "react";
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, HeartHandshake, Languages, LockKeyhole, MapPin, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Check, HeartHandshake, Languages, LockKeyhole, MapPin, Sparkles } from "lucide-react";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { track } from "@/lib/analytics";
 import { ConsentBanner } from "@/components/analytics/consent-banner";
 import { Navigation } from "./navigation";
-import { AvatarMark, Logo, Reveal, useAmbientRegion } from "./ui";
+import { Footer } from "./footer";
+import { AvatarMark, Reveal, useAmbientRegion } from "./ui";
 import { HeroShowcase } from "./hero-showcase";
 import { BusinessTypeSelector, Capabilities, ComparisonSlider, FeatureTabs, HealthSection, MarketsSection, MonitoredAreas, ProductStory, ScanDemo, WorkflowSection } from "./interactive-sections";
 import { WaitlistForm } from "./waitlist-form";
@@ -141,27 +142,3 @@ function HeroWaitlist({ copy }: { copy: Dictionary["hero"] }) {
   );
 }
 
-function Footer({ locale, copy }: { locale: Locale; copy: Dictionary["footer"] }) {
-  const [email, setEmail] = useState("");
-  function forwardEmail(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    window.dispatchEvent(new CustomEvent("prefill-waitlist", { detail: email }));
-    document.getElementById("early-access")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-  }
-  const groups = [
-    { title: copy.product, links: [[copy.links.overview, "#overview"], [copy.links.features, "#features"], [copy.links.how, "#how-it-works"], [copy.links.early, "#early-access"]] },
-    { title: copy.solutions, links: [[copy.links.small, "#business-types"], [copy.links.agencies, "#business-types"], [copy.links.local, "#markets"], [copy.links.uk, "#markets"], [copy.links.spain, "#markets"]] },
-    { title: copy.resources, links: [[copy.links.blog, `/${locale}/blog`], [copy.links.guides, `/${locale}/guides`], [copy.links.help, `/${locale}/help`], [copy.links.status, `/${locale}/status`]] },
-    { title: copy.company, links: [[copy.links.about, `/${locale}/about`], [copy.links.contact, `/${locale}/contact`], [copy.links.privacy, `/${locale}/privacy`], [copy.links.terms, `/${locale}/terms`]] },
-  ];
-  return (
-    <footer className="site-footer">
-      <div className="container site-footer__grid">
-        <div className="site-footer__brand"><Logo /><p>{copy.summary}</p><span><ShieldCheck aria-hidden="true" />Private beta · UK & Spain</span></div>
-        {groups.map((group) => <div className="footer-group" key={group.title}><h3>{group.title}</h3>{group.links.map(([label, href]) => <Link href={href} key={label}>{label}</Link>)}</div>)}
-        <div className="footer-updates"><h3>{copy.stay}</h3><p>{copy.stayBody}</p><form onSubmit={forwardEmail}><label className="sr-only" htmlFor="footer-email">{copy.email}</label><input id="footer-email" type="email" required placeholder={copy.email} value={email} onChange={(event) => setEmail(event.target.value)} /><button type="submit" aria-label={copy.stay}><ArrowRight aria-hidden="true" /></button></form></div>
-      </div>
-      <div className="container site-footer__bottom"><p>{copy.rights}</p><p>Understand. Improve. Grow.</p></div>
-    </footer>
-  );
-}
