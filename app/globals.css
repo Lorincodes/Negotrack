@@ -1141,6 +1141,24 @@ template[data-design-contract] { display: none; }
    below fixes a cause; none of them rely on clipping the body to hide a symptom. */
 
 @media (max-width: 900px) {
+  /* ── iOS paint fix ──────────────────────────────────────────────────────
+     Confirmed on device: the hero was present, opaque and at scroll zero but
+     simply not painted, and rotating the phone brought it back. That is a
+     compositing failure, not a hidden element.
+
+     The trigger is above it. A position:fixed element carrying backdrop-filter
+     makes WebKit composite everything beneath it, and this one also runs an
+     entrance animation on that same frosted layer during first paint. The
+     header itself painted, the masked atmosphere painted — each owns a layer —
+     and the hero sat between them unpainted until a repaint was forced.
+
+     At 92% white the blur contributes almost nothing here, while costing a
+     full-width composited layer over the page on every frame. Dropping it and
+     the load animation on small screens removes the trigger; giving the hero
+     grid its own layer means its paint no longer depends on that decision. */
+  .site-header .site-header__inner { backdrop-filter: none; animation: none; }
+  .hero__grid { transform: translateZ(0); }
+
   /* The floating header sits in the notch region on modern iPhones. env() only
      resolves to a real value because layout.tsx declares viewport-fit=cover. */
   .site-header { padding-top: max(10px, env(safe-area-inset-top, 0px)); }
