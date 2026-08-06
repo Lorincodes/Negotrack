@@ -1,16 +1,26 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Manrope, Sometype_Mono } from "next/font/google";
 import "./globals.css";
 
+/** Reading, navigation and controls. */
 const inter = Inter({
   variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
+/** Orientation: hero and section headings at 700, card headings at 600. */
+const manrope = Manrope({
   variable: "--font-display",
   subsets: ["latin"],
+  display: "swap",
+});
+
+/** Small interface labels, timestamps and product-preview captions only. */
+const sometypeMono = Sometype_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["500"],
   display: "swap",
 });
 
@@ -36,7 +46,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-GB" suppressHydrationWarning>
-      <body className={`${inter.variable} ${jakarta.variable}`}>
+      <body className={`${inter.variable} ${manrope.variable} ${sometypeMono.variable}`}>
         <template data-design-contract dangerouslySetInnerHTML={{ __html: directionContract }} />
         {children}
       </body>

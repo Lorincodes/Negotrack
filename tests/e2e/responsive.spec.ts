@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const viewportWidths = [375, 430, 768, 1_024, 1_440] as const;
+const viewportWidths = [375, 430, 768, 1_024, 1_440, 1_920] as const;
 const locales = ["en-GB", "es-ES"] as const;
 
 for (const locale of locales) {

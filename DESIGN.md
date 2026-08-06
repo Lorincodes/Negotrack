@@ -5,9 +5,11 @@ colors:
   background: "#ffffff"
   surface: "#f7f8fc"
   surface-strong: "#eef8f5"
+  surface-hero: "#f6f8fb"
   heading: "#111b3a"
   body: "#536077"
   muted: "#78849a"
+  meta: "#59667c"
   dark: "#061525"
   green: "#13c98a"
   green-strong: "#0ba675"
@@ -18,34 +20,39 @@ colors:
   amber: "#e39a24"
   border: "#e7eaf0"
   border-strong: "#dbe1ea"
+  border-hover: "#c6cedb"
 typography:
   display:
-    fontFamily: "Plus Jakarta Sans, sans-serif"
-    fontSize: "clamp(3.1rem, 4vw, 3.85rem)"
-    fontWeight: 800
-    lineHeight: 0.98
-    letterSpacing: "-0.032em"
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "clamp(3rem, 11cqw, 4.6rem)"
+    fontWeight: 700
+    lineHeight: 0.96
+    letterSpacing: "-0.046em"
   headline:
-    fontFamily: "Plus Jakarta Sans, sans-serif"
+    fontFamily: "Manrope, sans-serif"
     fontSize: "clamp(2.15rem, 4vw, 3.35rem)"
-    fontWeight: 800
-    lineHeight: 1.06
-    letterSpacing: "-0.032em"
+    fontWeight: 700
+    lineHeight: 1.0
+    letterSpacing: "-0.044em"
   title:
-    fontFamily: "Plus Jakarta Sans, sans-serif"
+    fontFamily: "Manrope, sans-serif"
     fontSize: "1.25rem"
-    fontWeight: 760
-    letterSpacing: "-0.032em"
+    fontWeight: 600
+    letterSpacing: "-0.028em"
   body:
     fontFamily: "Inter, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.7
-  label:
+  control:
     fontFamily: "Inter, sans-serif"
+    fontSize: "0.91rem"
+    fontWeight: 600
+  label:
+    fontFamily: "Sometype Mono, ui-monospace, monospace"
     fontSize: "0.69rem"
-    fontWeight: 780
-    letterSpacing: "0.045em"
+    fontWeight: 500
+    letterSpacing: "0.02em"
 rounded:
   compact: "8px"
   field: "9px"
@@ -138,7 +145,7 @@ The system is product-led and evidence-forward. Coded consoles, health scores, c
 
 - Daylight white space with midnight-navy authority.
 - Mint and teal actions supported by blue, purple, and amber analytic signals.
-- Plus Jakarta Sans for orientation; Inter for reading and control copy.
+- Manrope for orientation; Inter for reading and controls; Sometype Mono for interface labels.
 - Hairline borders, gently rounded canvases, and soft navy-tinted lift.
 - Responsive coded-product previews that remain honest about demonstration data.
 
@@ -167,12 +174,15 @@ The palette is a restrained daylight neutral system with one operative green fam
 - **Daylight White** (`background`): page ground, controls, and primary card surfaces.
 - **Cool Canvas** (`surface`): section alternation and quiet inset content.
 - **Mint Wash** (`surface-strong`): positive tonal grouping without a border-heavy treatment.
+- **Hero Ground** (`surface-hero`): the soft off-white the first viewport sits on, resolving to `background` before the next section so the ambient layers never end on a hard edge. Used once, on the hero only.
 - **Midnight Heading** (`heading`): display text, titles, scores, and high-value labels.
 - **Slate Body** (`body`): default paragraph and explanatory copy.
-- **Muted Slate** (`muted`): supporting metadata and low-emphasis labels.
+- **Muted Slate** (`muted`): supporting metadata and low-emphasis labels at 0.68rem and above.
+- **Metadata Slate** (`meta`): the accessible step below Muted Slate. Dense product metadata — recency lines, stage detail, report timestamps — renders below 0.62rem, where `muted` only reaches 3.6:1 on white. `meta` holds 5.8:1 and is the required colour for any metadata set at or under 0.62rem.
 - **Deep Midnight** (`dark`): high-contrast product demonstrations, selected controls, and dark actions.
 - **Hairline Grey** (`border`): default dividers and card structure.
 - **Strong Hairline** (`border-strong`): controls and boundaries that need more definition.
+- **Hover Hairline** (`border-hover`): the one step darker than Strong Hairline, used only to acknowledge a pointer on a field or control that already sits on `border-strong` at rest.
 
 **The Operative Mint Rule.** Mint and teal signal action or improvement; blue and purple distinguish analytic series, and amber communicates caution or pending work.
 
@@ -180,10 +190,11 @@ The palette is a restrained daylight neutral system with one operative green fam
 
 ## Typography
 
-**Display Font:** Plus Jakarta Sans (with sans-serif fallback)  
+**Display Font:** Manrope (with sans-serif fallback)  
+**Label Font:** Sometype Mono (with ui-monospace fallback)  
 **Body Font:** Inter (with sans-serif fallback)
 
-**Character:** Plus Jakarta Sans is compact, assured, and slightly geometric; Inter keeps dense business information plain and readable. The pairing communicates modern product confidence without drifting into a futuristic AI aesthetic.
+**Character:** Manrope is open and quietly geometric, and at 700 with tight negative tracking it reads refined rather than bulky. Inter keeps dense business information plain and readable. Sometype Mono gives timestamps and product-preview captions the cadence of real interface chrome. Three families, no more: the trio communicates modern product confidence without drifting into a futuristic AI aesthetic.
 
 ### Hierarchy
 
@@ -193,7 +204,9 @@ The palette is a restrained daylight neutral system with one operative green fam
 - **Body** (`typography.body`): explanatory copy; long marketing paragraphs stay within the implemented 580–640px measure.
 - **Label** (`typography.label`): demonstration badges, product status, and compact metadata; uppercase is reserved for short signals.
 
-**The Two-Voice Rule.** Plus Jakarta Sans carries orientation and emphasis; Inter carries reading, navigation, labels, and controls.
+**The Three-Voice Rule.** Manrope carries orientation and emphasis — 700 for hero and section headings, 600 for card-scale headings. Inter carries reading at 400 and navigation, buttons and form controls at 500–600. Sometype Mono 500 is reserved for small interface labels, timestamps and product-preview captions, and never sets a heading or a paragraph.
+
+**Headline measure.** The hero headline is sized in container-query units against its own column, not the viewport: once the hero container stops growing, viewport units keep scaling the type and push the headline onto more lines rather than fewer.
 
 ## Layout
 
@@ -265,6 +278,44 @@ Cards and coded frames use 1px hairlines and clip their internal chrome or previ
 ### Product Frame
 
 The signature coded-product canvas uses `card-product`, a 1px cool hairline, Product Hero shadow, and a 34px pale browser chrome. Three 6px status dots, a centred address lozenge, and an explicit preview label make the demonstration legible as product evidence rather than an illustration.
+
+## Motion
+
+Motion explains product state. It is never decoration, and it never asks the visitor to wait.
+
+**Easing tokens:** `--ease-out` `cubic-bezier(0.16, 1, 0.3, 1)` for arrivals, `--ease-exit` `cubic-bezier(0.4, 0, 1, 1)` for departures, `--ease-drift` `cubic-bezier(0.45, 0, 0.55, 1)` for ambient loops only.
+
+**Durations:** 100–150ms immediate feedback, 150–300ms routine state change, 300–500ms layout or view transition, 500–800ms for the one authored entrance. Ambient loops run 16s or slower.
+
+### The Resolve
+
+The hero console carries the single authored sequence on the site, played once when it enters view and never repeated: four metrics settle, their values count up, micro-bars fill, the trend lines draw, and the top recommendation arrives last with one mint sweep. The recommendation arriving last *is* the product thesis — scattered signals resolve into one instruction. Nothing else on the page is allowed a sequence longer than 600ms.
+
+Its two echoes are shorter, user-replayable, and choreographed differently: the scan demonstration (signals gathered, then a result) and the competitor overtake (movement, then a plain-English cause).
+
+### Ambient depth
+
+Continuous ambient motion exists in exactly three regions and nowhere else: the hero, the dark scan section, and the launch billboard. Each is bounded by hairline alphas, driven only by `transform` and `opacity`, and suspended by an `IntersectionObserver` (`.is-ambient`) whenever the region leaves the viewport or the tab is hidden.
+
+- **Hero:** a drifting mint orb and a drifting teal orb, a static violet orb, a faint 44px plotted field confined to the right of the headline column, and two floating insight chips anchored to opposite outer corners of the console.
+- **Scan section:** the existing radial glow breathing on opacity alone, and two travelling teal and blue signal strokes that mirror the product's own stage gradient.
+- **Billboard:** one slow white light drift and a static grain overlay.
+
+Purple never drifts as ambience — it is an analytic-series colour. Blue appears in ambient motion only where it mirrors a real product gradient. Rising particles, sweeping shine beams, and pulsing indicators are forbidden: they read as crypto or gaming chrome and encode nothing.
+
+### Scroll-entry vocabulary
+
+Five distinct grammars, mapped so no section reuses its neighbour's: fade-and-rise (`.reveal--soft`), small stagger (`.reveal--rail`), side reveal for split rows (`.reveal--left` / `.reveal--right`, alternating direction down the story rows), line and chart drawing (health, workflow), and panel crossfade (monitored areas, business types).
+
+Every reveal keyframe starts at `opacity: 0.35` or higher, never `0`, and the element's un-animated CSS is always its final state. Copy is legible on the first painted frame whether or not scripting runs.
+
+### Feedback
+
+A 2px lift, a hairline stepping to a strong hairline, a 3px arrow nudge, and one non-looping sweep on the mint action. Every hover state also fires on `:focus-visible`. Nothing on this page bounces, wobbles, pulses, follows the cursor magnetically, or scales past 1.02. The only loops tied to an interactive surface are the scan progress sheen and the spinner, both of which indicate work genuinely in progress.
+
+### Reduced motion
+
+`prefers-reduced-motion: reduce` removes the grid field, signal strokes, billboard drift, and every sweep outright; freezes the orbs, chips and glow at a settled state; and shows every score, bar, chart and explanation at its finished value on the first paint. The pointer tilt is never attached, timed sequences resolve instantly, and the scan demonstration jumps straight to its result. CSS and `useReducedMotion()` must agree — CSS alone cannot stop a timer chain, an observer callback, or a pointer listener.
 
 ## Do's and Don'ts
 

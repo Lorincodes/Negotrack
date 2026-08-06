@@ -3,18 +3,24 @@ import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
-const outputDir = path.resolve("screenshots");
+/**
+ * Usage:
+ *   node scripts/capture-screenshots.mjs [outputDir] [locales] [widths] [reducedMotion]
+ *   node scripts/capture-screenshots.mjs screenshots en-GB,es-ES 375,430,768,1024,1440,1920 reduce
+ */
+const [, , outputDirArg, localesArg, widthsArg, motionArg] = process.argv;
+
+const outputDir = path.resolve(outputDirArg ?? "screenshots");
+const locales = (localesArg ?? "en-GB").split(",").filter(Boolean);
+const widths = (widthsArg ?? "375,430,768,1024,1440,1920").split(",").map(Number);
+const reducedMotion = motionArg === "reduce" ? "reduce" : "no-preference";
+const origin = process.env.CAPTURE_ORIGIN ?? "http://127.0.0.1:3000";
+
+const heightForWidth = (width) => (width <= 430 ? 932 : width <= 768 ? 1024 : width <= 1024 ? 900 : 1000);
+
 await mkdir(outputDir, { recursive: true });
 
 const browser = await chromium.launch({ channel: "chrome", headless: true });
-
-const viewports = [
-  [375, 844, "375"],
-  [430, 932, "430"],
-  [768, 1024, "768"],
-  [1024, 900, "1024"],
-  [1440, 1000, "1440"],
-];
 
 async function captureStitchedPage(page, width, height, outputPath) {
   const totalHeight = await page.evaluate(() => document.documentElement.scrollHeight);
@@ -30,7 +36,7 @@ async function captureStitchedPage(page, width, height, outputPath) {
       document.documentElement.toggleAttribute("data-capture-scrolled", scrolled);
       window.scrollTo({ top, behavior: "auto" });
     }, { top: offset, scrolled: offset > 0 });
-    await page.waitForTimeout(30);
+    await page.waitForTimeout(reducedMotion === "reduce" ? 60 : 420);
     const buffer = await page.screenshot({ type: "png", fullPage: false, animations: "disabled", caret: "hide" });
     segments.push({ input: buffer, top: offset, left: 0 });
   }
@@ -45,24 +51,31 @@ async function captureStitchedPage(page, width, height, outputPath) {
   });
 }
 
-for (const [width, height, label] of viewports) {
-  const page = await browser.newPage({ viewport: { width, height } });
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("http://127.0.0.1:3000/en-GB", { waitUntil: "networkidle" });
-  await page.evaluate(() => document.fonts.ready);
-  const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
-  for (let offset = 0; offset < pageHeight; offset += Math.max(320, Math.floor(height * 0.8))) {
-    await page.evaluate((top) => window.scrollTo({ top, behavior: "auto" }), offset);
-    await page.waitForTimeout(24);
+for (const locale of locales) {
+  const prefix = locales.length > 1 ? `negotrack-${locale}` : "negotrack";
+  for (const width of widths) {
+    const height = heightForWidth(width);
+    const label = String(width);
+    const page = await browser.newPage({ viewport: { width, height } });
+    await page.emulateMedia({ reducedMotion });
+    await page.goto(`${origin}/${locale}`, { waitUntil: "networkidle" });
+    await page.evaluate(() => document.fonts.ready);
+    const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
+    for (let offset = 0; offset < pageHeight; offset += Math.max(320, Math.floor(height * 0.8))) {
+      await page.evaluate((top) => window.scrollTo({ top, behavior: "auto" }), offset);
+      await page.waitForTimeout(reducedMotion === "reduce" ? 24 : 260);
+    }
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "auto" }));
+    await page.waitForTimeout(reducedMotion === "reduce" ? 80 : 900);
+    await captureStitchedPage(page, width, height, path.join(outputDir, `${prefix}-${label}-full.png`));
+    // Target the hero element directly; resetting scroll and shooting the viewport proved unreliable.
+    await page.addStyleTag({ content: "html{scroll-behavior:auto!important}" });
+    await page.locator("#overview").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(reducedMotion === "reduce" ? 120 : 2_800);
+    await page.locator("#overview").screenshot({ path: path.join(outputDir, `${prefix}-${label}-hero.png`), animations: "disabled", caret: "hide" });
+    await page.close();
+    console.log(`captured ${prefix}-${label}`);
   }
-  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "auto" }));
-  await page.waitForTimeout(80);
-  await captureStitchedPage(page, width, height, path.join(outputDir, `negotrack-${label}-full.png`));
-  await page.waitForTimeout(80);
-  if (label === "375" || label === "1440") {
-    await page.screenshot({ path: path.join(outputDir, `negotrack-${label}-hero.png`), fullPage: false, animations: "disabled", caret: "hide" });
-  }
-  await page.close();
 }
 
 await browser.close();
