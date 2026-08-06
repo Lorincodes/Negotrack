@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { Navigation } from "@/components/marketing/navigation";
 import { Footer } from "@/components/marketing/footer";
+import { PageCards, PageCta, PageHero } from "@/components/marketing/page-sections";
+import { Reveal } from "@/components/marketing/ui";
 import { findGuide, guides, guidesForLocale } from "@/lib/guides";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 
@@ -97,12 +98,8 @@ export default async function GuidePage({ params }: PageProps) {
       <Navigation locale={locale} copy={dictionary.navigation} />
 
       <main id="main-content">
-        <section className="page-hero page-hero--article">
-          <div className="page-hero__atmosphere" aria-hidden="true">
-            <div className="hero-orb hero-orb--one" />
-            <div className="hero-orb hero-orb--two" />
-          </div>
-          <div className="container page-hero__inner">
+        <PageHero article>
+          <Reveal onMount>
             <nav className="page-hero__crumbs" aria-label={spanish ? "Ruta de navegación" : "Breadcrumb"}>
               <Link href={`/${locale}/guides`}>{t.crumb}</Link>
             </nav>
@@ -116,8 +113,8 @@ export default async function GuidePage({ params }: PageProps) {
                 {new Date(guide.updated).toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })}
               </time>
             </p>
-          </div>
-        </section>
+          </Reveal>
+        </PageHero>
 
         <section className="section page-section">
           <div className="container article">
@@ -148,29 +145,12 @@ export default async function GuidePage({ params }: PageProps) {
           <section className="section page-section page-section--tint">
             <div className="container">
               <h2 className="page-section__title">{t.more}</h2>
-              <div className="page-cards">
-                {siblings.map((sibling) => (
-                  <Link key={sibling.slug} href={`/${locale}/guides/${sibling.slug}`} className="page-card">
-                    <h3>{sibling.title}<ArrowUpRight aria-hidden="true" /></h3>
-                    <p>{sibling.description}</p>
-                  </Link>
-                ))}
-              </div>
+              <PageCards locale={locale} base="guides" items={siblings} />
             </div>
           </section>
         )}
 
-        <section className="section section--cta">
-          <div className="container">
-            <div className="page-cta">
-              <h2>{t.cta}</h2>
-              <p>{t.ctaBody}</p>
-              <Link className="button button--primary" href={`/${locale}#early-access`}>
-                {dictionary.navigation.join}<ArrowUpRight aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </section>
+        <PageCta locale={locale} dictionary={dictionary} title={t.cta} body={t.ctaBody} source={`guide-${guide.slug}`} />
       </main>
 
       <Footer locale={locale} copy={dictionary.footer} />

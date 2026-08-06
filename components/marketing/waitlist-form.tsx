@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useMemo, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { ArrowRight, Check, ChevronDown, LoaderCircle, ShieldCheck } from "lucide-react";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { track } from "@/lib/analytics";
@@ -31,8 +32,18 @@ export function WaitlistForm({ locale, copy, businessTypes }: { locale: Locale; 
   const [expanded, setExpanded] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "duplicate" | "error">("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  /**
+   * A capture form on a guide or capability page cannot post on its own —
+   * registration needs a privacy consent those pages have no room to ask for —
+   * so it sends the visitor here with the address in the URL, leaving only the
+   * consent to give. Read during render as the initial value rather than
+   * assigned from an effect, so there is no second render to prefill it.
+   */
+  const searchParams = useSearchParams();
+  const prefilled = searchParams.get("prefill") ?? "";
+
   const [state, setState] = useState<FormState>({
-    email: "", name: "", businessName: "", website: "", country: locale === "es-ES" ? "ES" : "GB", preferredLanguage: locale, businessType: "", biggestChallenge: "", privacyConsent: false, marketingConsent: false,
+    email: prefilled, name: "", businessName: "", website: "", country: locale === "es-ES" ? "ES" : "GB", preferredLanguage: locale, businessType: "", biggestChallenge: "", privacyConsent: false, marketingConsent: false,
   });
 
   useEffect(() => {
@@ -44,6 +55,19 @@ export function WaitlistForm({ locale, copy, businessTypes }: { locale: Locale; 
     window.addEventListener("prefill-waitlist", onPrefill);
     return () => window.removeEventListener("prefill-waitlist", onPrefill);
   }, []);
+
+  /**
+   * Drops the prefill parameter once it has been read, so a shared or reloaded
+   * link does not carry an address around and it never reaches analytics as a
+   * query string. This only rewrites history — it sets no state, because the
+   * value is read during render below rather than mirrored into state.
+   */
+  useEffect(() => {
+    if (!prefilled) return;
+    const url = new URL(window.location.href);
+    url.searchParams.delete("prefill");
+    window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  }, [prefilled]);
 
   const statusMessage = useMemo(() => {
     if (status === "success") return copy.success;

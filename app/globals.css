@@ -367,7 +367,10 @@ template[data-design-contract] { display: none; }
 .dashboard-body__rail { grid-column: 2; grid-row: 1; min-width: 0; min-height: 0; display: grid; }
 /* Shallow bottom strip: the wide main column lets the insight list run two-up on one line each. */
 .dashboard-strip { grid-column: 1 / -1; grid-row: 2; min-height: 0; display: grid; grid-template-columns: minmax(0,.62fr) minmax(0,1.38fr); gap: 10px; }
-.dashboard-panel { min-width: 0; min-height: 0; padding: 11px; border: 1px solid #edf0f4; border-radius: 10px; }
+/* Panels clip their own content. Without this a list that outgrows its track
+   escapes and lands on the panel below — which is what the centred rows were
+   doing once safe alignment stopped them overlapping upward instead. */
+.dashboard-panel { min-width: 0; min-height: 0; padding: 11px; border: 1px solid #edf0f4; border-radius: 10px; overflow: hidden; }
 .dashboard-panel--trend { display: grid; grid-template-rows: auto auto minmax(0,1fr); }
 /* Block flow, deliberately: the highlight sets `overflow: hidden` for its one-shot sweep, which
    gives it a zero automatic minimum — as a grid row it would collapse and clip its second line. */
@@ -378,7 +381,8 @@ template[data-design-contract] { display: none; }
 .recommendation-highlight strong {
   display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
-.dashboard-panel--competitor { display: grid; align-content: center; }
+/* Same safe-alignment reason as .dashboard-rows above. */
+.dashboard-panel--competitor { display: grid; align-content: safe center; }
 .dashboard-panel--competitor strong { display: block; margin-top: 4px; color: var(--heading); font-size: .82rem; }
 .dashboard-panel__heading { display: flex; justify-content: space-between; align-items: center; }
 .dashboard-panel__heading span, .dashboard-panel__label { color: #435169; font-size: .62rem; font-weight: 760; }
@@ -767,7 +771,10 @@ template[data-design-contract] { display: none; }
 @keyframes hero-tab-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* Compact readout used by every non-chart panel. */
-.dashboard-rows { display: grid; align-content: center; gap: 7px; margin: 11px 0 0; padding: 0; list-style: none; }
+/* `safe` matters here: plain centring overflows in both directions when the
+   rows exceed their track, so the list spilled upward over the panel's meta
+   line. Safe alignment falls back to start instead of overlapping. */
+.dashboard-rows { display: grid; align-content: safe center; gap: 7px; margin: 11px 0 0; padding: 0; list-style: none; }
 .dashboard-rows li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 6px; border-bottom: 1px solid #f1f3f7; }
 .dashboard-rows li:last-child { border-bottom: 0; padding-bottom: 0; }
 .dashboard-rows span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #4f5c72; font-size: .58rem; }
@@ -1243,10 +1250,72 @@ ul.guide__list { list-style: disc; }
 .planned-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
 .planned-list li { padding: 8px 14px; border: 1px solid var(--border); border-radius: var(--radius-pill); background: white; color: var(--meta); font-size: .91rem; font-weight: 600; }
 
-.page-cta { display: grid; justify-items: center; gap: 14px; padding: 54px 40px; border-radius: var(--radius-panel); background: var(--dark); text-align: center; }
-.page-cta h2 { color: white; font-size: clamp(1.8rem, 3.4vw, 2.4rem); letter-spacing: -0.04em; }
+/* Split hero: copy and capture on the left, the real console on the right,
+   matching the homepage's first viewport rather than restating it as prose. */
+/* The console needs roughly 700px before its internal grid starts colliding,
+   so the split favours it and stacks early rather than compressing it. */
+.page-hero__split { display: grid; grid-template-columns: minmax(0, 38fr) minmax(0, 62fr); align-items: center; gap: 44px; }
+.page-hero__copy { min-width: 0; }
+.page-hero__note { margin-top: 18px; color: var(--meta); font-family: var(--font-mono), ui-monospace, monospace; font-size: .69rem; letter-spacing: .045em; text-transform: uppercase; }
+
+/* Capture form, same shape as the hero's. */
+.page-waitlist { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; max-width: 480px; margin-top: 28px; }
+.page-waitlist input { min-height: 48px; padding: 0 18px; border: 1px solid var(--border-strong); border-radius: var(--radius-pill); background: white; color: var(--heading); transition: border-color .18s ease, box-shadow .18s ease; }
+.page-waitlist input:focus { outline: 0; border-color: var(--green); box-shadow: 0 0 0 3px rgba(19,201,138,.18); }
+.page-waitlist input::placeholder { color: var(--muted); }
+.page-waitlist .button { min-height: 48px; white-space: nowrap; }
+
+/* The console keeps its own perspective and a soft mint bloom behind it, so it
+   reads as the product rather than a picture of one. */
+.capability-console { position: relative; min-width: 0; }
+.capability-console__glow { position: absolute; inset: -12% -8% -18% -8%; z-index: 0; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(80,224,190,.30), rgba(97,230,193,.10) 55%, rgba(97,230,193,0) 78%); }
+.capability-console__frame { position: relative; z-index: 1; perspective: 1500px; }
+.capability-console__caption { position: relative; z-index: 1; display: flex; justify-content: center; margin-top: 18px; }
+
+/* Check cards: structure instead of a wall of ticks. */
+.check-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.check-card { display: grid; grid-template-columns: 30px 1fr; align-items: start; gap: 12px; padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: white; transition: border-color .18s ease, transform .18s var(--ease-out); }
+.check-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+.check-card span { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; }
+.check-card svg { width: 15px; }
+.check-card p { color: var(--body); font-size: .91rem; line-height: 1.55; }
+.check-card--mint span { background: #e8f9f3; color: var(--green-strong); }
+.check-card--blue span { background: #eaf0ff; color: var(--blue); }
+.check-card--violet span { background: #f1ecff; color: var(--purple); }
+.check-card--teal span { background: #e6f8f9; color: var(--teal); }
+.check-card--amber span { background: #fdf3e3; color: var(--amber); }
+
+.page-section__head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.page-section__link { display: inline-flex; align-items: center; gap: 7px; color: var(--green-strong); font-size: .91rem; font-weight: 640; }
+.page-section__link svg { width: 15px; transition: transform .18s var(--ease-out); }
+.page-section__link:hover svg { transform: translate(3px, -3px); }
+
+.page-cta { position: relative; overflow: hidden; padding: 58px 40px; border-radius: var(--radius-panel); background: var(--dark); text-align: center; }
+/* One slow light drift, the billboard's only ambient motion. */
+.page-cta__drift { position: absolute; inset: -40% -20%; z-index: 0; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(97,230,193,.20), rgba(97,230,193,0) 70%);
+  animation: billboard-drift 30s var(--ease-drift) infinite alternate; }
+.page-cta__inner { position: relative; z-index: 1; display: grid; justify-items: center; gap: 14px; }
+.page-cta h2 { color: white; font-size: clamp(1.8rem, 3.4vw, 2.4rem); letter-spacing: -0.04em; text-wrap: balance; }
 .page-cta p { max-width: 52ch; color: rgba(255,255,255,.76); line-height: 1.65; }
-.page-cta .button { margin-top: 10px; }
+.page-cta .page-waitlist { width: min(480px, 100%); margin-top: 8px; }
+.page-cta .page-waitlist input { border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.06); color: white; }
+.page-cta .page-waitlist input::placeholder { color: rgba(255,255,255,.5); }
+.page-cta__points { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; margin: 14px 0 0; padding: 0; list-style: none; }
+.page-cta__points li { display: flex; align-items: center; gap: 7px; color: rgba(255,255,255,.72); font-size: .82rem; }
+.page-cta__points svg { width: 14px; color: var(--mint); }
+
+@media (max-width: 1240px) {
+  .page-hero__split { grid-template-columns: 1fr; gap: 40px; }
+  .capability-console { max-width: 760px; margin-inline: auto; }
+  .page-hero__copy { max-width: 760px; margin-inline: auto; }
+}
+@media (max-width: 680px) {
+  .check-grid { grid-template-columns: 1fr; }
+  .page-waitlist { grid-template-columns: 1fr; }
+  .page-waitlist .button { width: 100%; justify-content: center; }
+}
 
 @media (max-width: 900px) {
   .page-hero { padding-top: 132px; padding-bottom: 40px; }

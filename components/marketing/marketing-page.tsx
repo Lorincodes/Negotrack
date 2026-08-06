@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type CSSProperties, type FormEvent } from "react";
+import { Suspense, useState, type CSSProperties, type FormEvent } from "react";
 import { ArrowDown, ArrowUpRight, Check, HeartHandshake, Languages, LockKeyhole, MapPin, Sparkles } from "lucide-react";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { track } from "@/lib/analytics";
@@ -89,7 +89,12 @@ export function MarketingPage({ locale, dictionary: copy }: { locale: Locale; di
                 <ul>{copy.cta.benefits.map((benefit) => <li key={benefit}><Check aria-hidden="true" />{benefit}</li>)}</ul>
               </Reveal>
               <Reveal className="early-access__form" variant="settle" delay={0.12}>
-                <WaitlistForm locale={locale} copy={copy.form} businessTypes={copy.businessTypes.items.map((item) => item.label)} />
+                {/* The form reads a prefill parameter during render, so it
+                    needs a boundary or the whole route opts out of static
+                    rendering. */}
+                <Suspense fallback={null}>
+                  <WaitlistForm locale={locale} copy={copy.form} businessTypes={copy.businessTypes.items.map((item) => item.label)} />
+                </Suspense>
               </Reveal>
             </div>
           </div>

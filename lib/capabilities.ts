@@ -415,6 +415,31 @@ export const capabilities: Capability[] = [
   },
 ];
 
+/**
+ * Which panel of the product console belongs to each capability, so a page can
+ * show the real interface for what it describes rather than a generic one.
+ * Local visibility maps to the SEO panel because that panel is what carries the
+ * local ranking rows.
+ */
+const PANEL_BY_SLUG: Record<string, string> = {
+  "business-health-score": "overview",
+  "website-audit": "website",
+  "seo-tracking": "seo",
+  "review-monitoring": "reviews",
+  "local-visibility": "seo",
+  "performance-monitoring": "website",
+  "competitor-analysis": "competitors",
+  "content-analysis": "website",
+  "puntuacion-salud-negocio": "overview",
+  "auditoria-web": "website",
+  "visibilidad-local": "seo",
+  "seguimiento-resenas": "reviews",
+};
+
+export function panelForCapability(slug: string): string {
+  return PANEL_BY_SLUG[slug] ?? "overview";
+}
+
 export function capabilitiesForLocale(locale: Locale): Capability[] {
   return capabilities.filter((capability) => capability.locale === locale);
 }
