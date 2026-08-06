@@ -10,3 +10,8 @@ test-results/
 *.log
 *.tsbuildinfo
 .DS_Store
+.agents/
+.claude/
+.codex/
+.impeccable/
+screenshots/
