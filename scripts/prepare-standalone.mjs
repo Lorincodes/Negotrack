@@ -1,6 +1,12 @@
 import { cp, mkdir } from "node:fs/promises";
 import path from "node:path";
 
+// Vercel builds skip standalone output, so there is nothing to prepare there.
+if (process.env.VERCEL) {
+  console.log("Vercel build detected; skipping standalone preparation.");
+  process.exit(0);
+}
+
 const projectRoot = process.cwd();
 const standaloneRoot = path.join(projectRoot, ".next", "standalone");
 const standaloneNext = path.join(standaloneRoot, ".next");
