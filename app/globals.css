@@ -1152,11 +1152,13 @@ template[data-design-contract] { display: none; }
 }
 /* Starts visible, per the reveal contract: never a fully transparent frame. */
 @keyframes consent-in { from { opacity: .4; transform: translateY(10px); } }
-.consent__copy h2 { font-size: 1.05rem; letter-spacing: -0.03em; }
-.consent__copy p { margin: 6px 0 0; color: var(--body); font-size: .84rem; line-height: 1.6; }
+/* Sizes are the documented title / body / control steps rather than values
+   tuned by eye for this one component. */
+.consent__copy h2 { font-size: 1.25rem; letter-spacing: -0.03em; }
+.consent__copy p { margin: 6px 0 0; color: var(--body); font-size: 1rem; line-height: 1.6; }
 .consent__actions { display: flex; align-items: center; gap: 10px; }
 .consent__actions .button { min-height: 44px; }
-.consent__link { color: var(--meta); font-size: .78rem; font-weight: 620; text-decoration: underline; text-underline-offset: 3px; }
+.consent__link { color: var(--meta); font-size: 0.91rem; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .consent__link:hover, .consent__link:focus-visible { color: var(--heading); }
 
 @media (max-width: 680px) {
