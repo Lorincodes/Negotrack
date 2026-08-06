@@ -30,7 +30,7 @@ export function MarketingPage({ locale, dictionary: copy }: { locale: Locale; di
             <div className="hero-orb hero-orb--three" />
           </div>
           <HeroShowcase copy={copy}>
-            <Reveal className="hero__copy">
+            <Reveal className="hero__copy" onMount>
               <h1><span className="hero__lead">{copy.hero.lineOne}</span><span className="hero__emphasis">{copy.hero.emphasis}</span></h1>
               <p className="hero__body"><span>{copy.hero.eyebrow}. </span>{copy.hero.body}</p>
               <HeroWaitlist copy={copy.hero} />

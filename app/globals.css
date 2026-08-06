@@ -137,7 +137,10 @@ template[data-design-contract] { display: none; }
 .mobile-nav-backdrop { display: none; }
 
 /* Hero */
-.hero { min-height: 720px; padding-top: 164px; padding-bottom: 40px; }
+/* The hero hand-orders three layers by z-index (atmosphere 0, console 1, copy 2).
+   Isolating that stack keeps the masked atmosphere from being composited against
+   anything outside the section. */
+.hero { min-height: 720px; padding-top: 164px; padding-bottom: 40px; isolation: isolate; }
 .hero .container { width: min(var(--container-hero), calc(100% - 64px)); }
 .hero__grid { display: grid; grid-template-columns: minmax(0, 42fr) minmax(0, 58fr); align-items: center; gap: 104px; }
 /* A query container so the headline scales against its own column rather than the viewport —
@@ -214,9 +217,16 @@ template[data-design-contract] { display: none; }
 .hero-orb--three { width: min(44vw, 640px); aspect-ratio: 1; height: auto; right: 2%; top: 26%; background: radial-gradient(closest-side, rgba(32,191,200,.34), rgba(32,191,200,.09) 55%, rgba(32,191,200,0) 78%); }
 /* Lavender/blue settles low and centre, away from the headline. */
 .hero-orb--two { width: min(56vw, 760px); aspect-ratio: 1; height: auto; left: 18%; bottom: -14%; background: radial-gradient(closest-side, rgba(124,116,246,.26), rgba(124,116,246,.07) 54%, rgba(124,116,246,0) 78%); }
-.is-ambient .hero-orb--one { animation: orb-drift-a 32s var(--ease-drift) infinite alternate; will-change: transform, opacity; }
-.is-ambient .hero-orb--three { animation: orb-drift-c 38s var(--ease-drift) infinite alternate; will-change: transform, opacity; }
-.is-ambient .hero-orb--two { animation: orb-drift-b 44s var(--ease-drift) infinite alternate; will-change: transform, opacity; }
+/* No will-change here on purpose. These orbs live inside a masked, overflow-hidden
+   layer, and .is-ambient is added by script after the observer fires. Introducing
+   a compositing hint at that moment rebuilds the layer tree underneath the hero,
+   and WebKit can leave the higher-z-index copy and console unpainted until some
+   later event forces a repaint — which is why the hero read as blank until the
+   first scroll. The keyframes already use translate3d, so the layer promotion
+   these hints were asking for happens anyway, from the first frame. */
+.is-ambient .hero-orb--one { animation: orb-drift-a 32s var(--ease-drift) infinite alternate; }
+.is-ambient .hero-orb--three { animation: orb-drift-c 38s var(--ease-drift) infinite alternate; }
+.is-ambient .hero-orb--two { animation: orb-drift-b 44s var(--ease-drift) infinite alternate; }
 @keyframes orb-drift-a { from { opacity: .7; transform: translate3d(0,0,0) scale(1); } to { opacity: .92; transform: translate3d(-3%, 3%, 0) scale(1.05); } }
 @keyframes orb-drift-c { from { opacity: .66; transform: translate3d(0,0,0) scale(1); } to { opacity: .9; transform: translate3d(-4%, -3%, 0) scale(1.06); } }
 @keyframes orb-drift-b { from { opacity: .72; transform: translate3d(0,0,0) scale(1); } to { opacity: .95; transform: translate3d(4%, -2%, 0) scale(1.04); } }

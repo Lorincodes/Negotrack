@@ -197,9 +197,22 @@ export function Reveal({
   className = "",
   delay = 0,
   variant = "soft",
-}: { children: ReactNode; className?: string; delay?: number; variant?: RevealVariant }) {
+  onMount = false,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  variant?: RevealVariant;
+  /**
+   * For content that is always in the first viewport. Scroll-gating an entrance
+   * the visitor can already see buys nothing and makes the content depend on an
+   * observer callback landing; `onMount` runs the same entrance immediately.
+   */
+  onMount?: boolean;
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInViewOnce(ref);
+  const observed = useInViewOnce(ref);
+  const inView = onMount || observed;
   return (
     <div
       ref={ref}
