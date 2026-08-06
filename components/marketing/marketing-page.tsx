@@ -76,7 +76,7 @@ export function MarketingPage({ locale, dictionary: copy }: { locale: Locale; di
         <ComparisonSlider copy={copy.comparison} />
         <BusinessTypeSelector copy={copy.businessTypes} preview={copy.preview} />
         <MarketsSection copy={copy.markets} />
-        <Capabilities copy={copy.capabilities} />
+        <Capabilities copy={copy.capabilities} locale={locale} />
 
         <section className="section section--cta" id="early-access">
           <div className="container">

@@ -693,9 +693,9 @@ template[data-design-contract] { display: none; }
 .section--capabilities { padding-top: 88px; }
 .section--capabilities .section-intro { margin-bottom: 34px; }
 .capability-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); overflow: hidden; border: 1px solid var(--border); border-radius: 14px; }
-.capability-grid > div { position: relative; min-height: 94px; display: grid; grid-template-columns: 34px 1fr; align-items: center; gap: 11px; padding: 17px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.capability-grid > div:nth-child(4n) { border-right: 0; }.capability-grid > div:nth-last-child(-n+4) { border-bottom: 0; }
-.capability-grid > div > span { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; background: #e8f9f3; color: var(--green-strong); }.capability-grid > div:nth-child(3n+2) > span { background:#edf2ff;color:var(--blue) }.capability-grid > div:nth-child(3n) > span { background:#f2edff;color:var(--purple) }
+.capability-grid > * { position: relative; min-height: 94px; display: grid; grid-template-columns: 34px 1fr; align-items: center; gap: 11px; padding: 17px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.capability-grid > *:nth-child(4n) { border-right: 0; }.capability-grid > *:nth-last-child(-n+4) { border-bottom: 0; }
+.capability-grid > * > span { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; background: #e8f9f3; color: var(--green-strong); }.capability-grid > *:nth-child(3n+2) > span { background:#edf2ff;color:var(--blue) }.capability-grid > *:nth-child(3n) > span { background:#f2edff;color:var(--purple) }
 .capability-grid svg { width: 15px; }.capability-grid strong { color: #3e4b62; font-size: .68rem; }.capability-grid em { position: absolute; right: 9px; top: 8px; padding: 3px 6px; border-radius: var(--radius-pill); background: #fff3da; color: #8a5a07; font-size: .45rem; font-style: normal; font-weight: 750; }
 
 /* Early access and form */
@@ -961,8 +961,8 @@ template[data-design-contract] { display: none; }
 
 /* ── Capability cascade ───────────────────────────────────────────────────── */
 .capability-grid[data-inview="true"] > div { animation: reveal-quiet .24s var(--ease-out) calc(var(--i) * 28ms) both; }
-.capability-grid > div { transition: background .2s ease; }
-.capability-grid > div:hover { background: #fbfcfe; }
+.capability-grid > * { transition: background .2s ease; }
+.capability-grid > *:hover { background: #fbfcfe; }
 
 /* ── Launch billboard ─────────────────────────────────────────────────────── */
 .early-access__drift { position: absolute; inset: -30% -20%; z-index: 0; pointer-events: none; background: radial-gradient(closest-side, rgba(255,255,255,.1), rgba(255,255,255,0) 70%); transform: translate3d(-12%, 0, 0); }
@@ -1125,7 +1125,7 @@ template[data-design-contract] { display: none; }
   .comparison-stage { min-height:0;display:grid;overflow:hidden; }.audit-panel,.explanation-panel { position:relative;inset:auto;padding:24px 20px; }.audit-panel ul { width:100%;margin-top:20px; }.explanation-panel { clip-path:none!important;border-top:1px solid var(--border); }.explanation-panel>div { margin-top:20px;padding:19px; }.explanation-panel>div p { font-size:1rem; }.explanation-panel>strong { font-size:.66rem; }.comparison-divider { display:none; }
   .business-selector { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;margin-inline:-2px; }.business-selector button { min-width:0;min-height:56px; }.business-preview { grid-template-columns:1fr;gap:20px;padding:26px; }.business-preview__score { border:0;border-block:1px solid var(--border);padding-block:16px; }.business-preview__priority { grid-column:auto; }
   .market-panels { grid-template-columns:1fr; }.market-panel { min-height:unset; }.market-panel__map { width:112px; }
-  .capability-grid { grid-template-columns:repeat(2,1fr); }.capability-grid>div,.capability-grid>div:nth-child(4n){border-right:1px solid var(--border);border-bottom:1px solid var(--border)}.capability-grid>div:nth-child(2n){border-right:0}.capability-grid>div:nth-last-child(-n+2){border-bottom:0}.capability-grid>div { grid-template-columns:30px 1fr;padding:13px; }.capability-grid strong { font-size:.61rem; }
+  .capability-grid { grid-template-columns:repeat(2,1fr); }.capability-grid>*,.capability-grid>*:nth-child(4n){border-right:1px solid var(--border);border-bottom:1px solid var(--border)}.capability-grid>*:nth-child(2n){border-right:0}.capability-grid>*:nth-last-child(-n+2){border-bottom:0}.capability-grid>* { grid-template-columns:30px 1fr;padding:13px; }.capability-grid strong { font-size:.61rem; }
   .section--cta { padding-inline:0; }.early-access { margin-inline:-4px;padding:36px 20px;border-radius:20px; }.early-access__copy h2 { font-size:2.4rem; }.waitlist-form { padding:22px 18px; }.form-grid { grid-template-columns:1fr; }.form-field--wide { grid-column:auto; }.waitlist-form__submit { align-items:flex-start;flex-direction:column; }.waitlist-form__submit .button { width:100%; }
   .section--workflow,.section--capabilities { padding-top:46px; }.section--cta { padding-top:24px; }.site-footer { padding-top:42px; }.site-footer__grid { grid-template-columns:1fr 1fr;gap:28px 22px; }.site-footer__brand,.footer-updates { grid-column:1/-1; }.site-footer__bottom { flex-direction:column;gap:6px; }
 }
@@ -1182,6 +1182,10 @@ ul.guide__list { list-style: disc; }
 .guide-index a:hover h2, .guide-index a:focus-visible h2 { color: var(--green-strong); }
 .guide-index a:hover svg, .guide-index a:focus-visible svg { transform: translate(3px, -3px); }
 .guide-index p { margin-top: 6px; color: var(--body); font-size: .88rem; line-height: 1.6; }
+
+.capability__covers { max-width: 68ch; margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 11px; }
+.capability__covers li { display: flex; align-items: flex-start; gap: 10px; color: var(--body); font-size: 1rem; line-height: 1.6; }
+.capability__covers svg { width: 16px; flex: 0 0 auto; margin-top: 4px; color: var(--green-strong); }
 
 /* ── Analytics consent ────────────────────────────────────────────────────── */
 /* A floating panel on the same hairline-and-soft-shadow system as the product

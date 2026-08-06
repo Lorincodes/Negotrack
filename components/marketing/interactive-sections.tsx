@@ -7,7 +7,9 @@ import {
   Clock3, Eye, FileChartColumn, Gauge, Globe2, Lightbulb, LineChart as LineChartIcon, LoaderCircle, MapPin,
   MousePointer2, Play, Search, ShieldCheck, ShoppingBag, Sparkles, Star, Store, Stethoscope, TrendingUp, Wrench,
 } from "lucide-react";
-import type { Dictionary } from "@/lib/i18n";
+import Link from "next/link";
+import type { Dictionary, Locale } from "@/lib/i18n";
+import { capabilitiesForLocale } from "@/lib/capabilities";
 import { CountUp, DemoBadge, ProductFrame, Reveal, ScoreRing, standardTrendData, TrendChart, useAmbientRegion, useInViewOnce } from "./ui";
 
 const workflowIcons = [Search, BrainCircuit, ClipboardCheck, LineChartIcon];
@@ -670,9 +672,13 @@ export function MarketsSection({ copy }: { copy: Dictionary["markets"] }) {
 
 const capabilityIcons = [Gauge, Globe2, Search, Building2, Star, MapPin, Activity, Eye, Sparkles, FileChartColumn, LineChartIcon, BriefcaseBusiness];
 
-export function Capabilities({ copy }: { copy: Dictionary["capabilities"] }) {
+export function Capabilities({ copy, locale }: { copy: Dictionary["capabilities"]; locale: Locale }) {
   const gridRef = useRef<HTMLDivElement>(null);
   const inView = useInViewOnce(gridRef, { threshold: 0.1 });
+  // Only capabilities with a real page become links; the rest stay as plain
+  // cells rather than leading somewhere that says nothing.
+  const documented = new Map(capabilitiesForLocale(locale).map((c) => [c.name, c.slug]));
+
   return (
     <section className="section section--capabilities">
       <div className="container">
@@ -680,7 +686,15 @@ export function Capabilities({ copy }: { copy: Dictionary["capabilities"] }) {
         <div ref={gridRef} className="capability-grid" data-inview={inView ? "true" : undefined}>
           {copy.items.map((item, index) => {
             const Icon = capabilityIcons[index];
-            return <div key={item} style={{ "--i": index } as CSSProperties}><span><Icon aria-hidden="true" /></span><strong>{item}</strong>{index > 7 && <em>{copy.coming}</em>}</div>;
+            const slug = documented.get(item);
+            const body = (
+              <><span><Icon aria-hidden="true" /></span><strong>{item}</strong>{index > 7 && <em>{copy.coming}</em>}</>
+            );
+            return slug ? (
+              <Link key={item} href={`/${locale}/capabilities/${slug}`} style={{ "--i": index } as CSSProperties}>{body}</Link>
+            ) : (
+              <div key={item} style={{ "--i": index } as CSSProperties}>{body}</div>
+            );
           })}
         </div>
       </div>

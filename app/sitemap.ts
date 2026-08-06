@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { capabilitiesForLocale } from "@/lib/capabilities";
 import { guidesForLocale } from "@/lib/guides";
 import { locales } from "@/lib/i18n";
 
@@ -42,6 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return locales.flatMap((locale) => {
     const published = guidesForLocale(locale);
+    const documented = capabilitiesForLocale(locale);
     const entries: Entry[] = [
       ...shared,
       { path: identityByLocale[locale], date: LAST_MODIFIED.identity, changeFrequency: "monthly", priority: 0.9 },
@@ -54,6 +56,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
         date: guide.updated,
         changeFrequency: "monthly" as const,
         priority: 0.8,
+      })),
+      ...(documented.length
+        ? [{ path: "/capabilities", date: LAST_MODIFIED.home, changeFrequency: "monthly" as const, priority: 0.8 }]
+        : []),
+      ...documented.map((capability) => ({
+        path: `/capabilities/${capability.slug}`,
+        date: LAST_MODIFIED.home,
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
       })),
     ];
     return entries.map((entry) => ({
