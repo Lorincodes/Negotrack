@@ -1166,13 +1166,20 @@ template[data-design-contract] { display: none; }
   /* 38px is a comfortable pointer target and a poor thumb one. */
   .feature-tabs button { min-height: 44px; }
 
-  /* The markets cards carried desktop proportions: a large centred medallion
-     over a mostly empty band. Align the mark to the copy beneath it instead. */
+  /* The markets cards carried desktop proportions: a large medallion over a
+     mostly empty band. Stacked under a centred section heading the whole card
+     centres with it, so the mark, label, heading and list share one axis.
+     The list keeps its own left edge inside a centred block so the check marks
+     still line up with each other rather than ragging around the text. */
   .market-panels { gap: 14px; }
-  .market-panel { grid-template-columns: 1fr; gap: 4px; padding: 24px 22px; }
-  .market-panel__map { width: 96px; justify-self: start; }
+  .market-panel { grid-template-columns: 1fr; justify-items: center; gap: 4px; padding: 24px 22px; text-align: center; }
+  .market-panel__map { width: 96px; justify-self: center; }
   .market-panel h3 { margin-top: 8px; }
-  .market-panel ul { margin-top: 18px; }
+  .market-panel ul { width: fit-content; margin-top: 18px; margin-inline: auto; text-align: left; }
+
+  /* Pill radius again: the shell is one row on desktop but wraps its button
+     onto a second row here, where 999px stretches into an ellipse. */
+  .scan-input-shell { border-radius: var(--radius-panel); }
 
   /* Long uppercase labels were the one element still able to push a row wider
      than its column. */
