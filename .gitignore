@@ -15,3 +15,6 @@ test-results/
 .codex/
 .impeccable/
 screenshots/
+
+.vercel
+.env*

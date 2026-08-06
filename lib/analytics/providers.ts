@@ -16,6 +16,30 @@ function analyticsWindow(): AnalyticsWindow | undefined {
 }
 
 /**
+ * Resolves `gtag`, creating the standard shim if the tag has not loaded yet.
+ *
+ * Consent flips the loader and the page-view tracker on in the same render, so
+ * the first page view is reported in the same tick that the script tag is
+ * injected — before gtag.js has run and defined `window.gtag`. Returning early
+ * in that window silently dropped the load page view and any event fired in
+ * the first moments after accepting.
+ *
+ * `gtag` is only `dataLayer.push(arguments)`, and gtag.js replays whatever it
+ * finds on the queue when it initialises, so queueing loses nothing.
+ */
+function gtagOrQueue(w: AnalyticsWindow): GtagFn {
+  const queue = (w.dataLayer = w.dataLayer ?? []);
+  if (!w.gtag) {
+    // gtag.js distinguishes tag commands from ordinary dataLayer pushes by
+    // testing for an Arguments object, and silently ignores plain arrays. The
+    // shim therefore has to forward `arguments` rather than a rest parameter.
+    // eslint-disable-next-line prefer-rest-params
+    w.gtag = function gtagShim() { queue.push(arguments); } as GtagFn;
+  }
+  return w.gtag;
+}
+
+/**
  * GA4.
  *
  * The tag is configured with `send_page_view: false` in the loader, so the
@@ -27,8 +51,8 @@ const googleAnalytics: AnalyticsProvider = {
   id: "ga4",
   pageView(url) {
     const w = analyticsWindow();
-    if (!w?.gtag) return;
-    w.gtag("event", "page_view", {
+    if (!w) return;
+    gtagOrQueue(w)("event", "page_view", {
       page_path: url,
       page_location: `${analyticsConfig.siteUrl}${url}`,
       send_to: analyticsConfig.gaMeasurementId,
@@ -36,8 +60,8 @@ const googleAnalytics: AnalyticsProvider = {
   },
   track(event) {
     const w = analyticsWindow();
-    if (!w?.gtag) return;
-    w.gtag("event", event.name, eventParams(event));
+    if (!w) return;
+    gtagOrQueue(w)("event", event.name, eventParams(event));
   },
 };
 
