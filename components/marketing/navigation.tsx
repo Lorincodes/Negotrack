@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Languages, Menu, X } from "lucide-react";
 import type { Dictionary, Locale } from "@/lib/i18n";
+import { track } from "@/lib/analytics";
 import { Logo } from "./ui";
 
 export function Navigation({ locale, copy }: { locale: Locale; copy: Dictionary["navigation"] }) {
@@ -15,6 +16,8 @@ export function Navigation({ locale, copy }: { locale: Locale; copy: Dictionary[
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
   const otherLocale: Locale = locale === "en-GB" ? "es-ES" : "en-GB";
+  /** Both language controls navigate to the same place, so both report it. */
+  const onLanguageChange = () => track({ name: "language_changed", from: locale, to: otherLocale });
 
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -76,7 +79,7 @@ export function Navigation({ locale, copy }: { locale: Locale; copy: Dictionary[
           {links.map(([label, href]) => <Link key={label} href={href}>{label}</Link>)}
         </nav>
         <div className="site-header__actions">
-          <Link className="language-link" href={`/${otherLocale}`} hrefLang={otherLocale} aria-label={`Switch language to ${otherLocale}`}>
+          <Link className="language-link" href={`/${otherLocale}`} hrefLang={otherLocale} aria-label={`Switch language to ${otherLocale}`} onClick={onLanguageChange}>
             <Languages aria-hidden="true" />{locale === "en-GB" ? "EN" : "ES"}
           </Link>
           <Link className="button button--primary button--small desktop-cta" href="#early-access">{copy.join}<ArrowUpRight aria-hidden="true" /></Link>
@@ -111,7 +114,7 @@ export function Navigation({ locale, copy }: { locale: Locale; copy: Dictionary[
               <nav aria-label="Mobile navigation links">
                 {links.map(([label, href]) => <Link key={label} href={href} onClick={close}>{label}<ArrowUpRight aria-hidden="true" /></Link>)}
               </nav>
-              <Link className="mobile-nav__language" href={`/${otherLocale}`} hrefLang={otherLocale} onClick={close}><Languages aria-hidden="true" />{locale === "en-GB" ? "Español" : "English"}</Link>
+              <Link className="mobile-nav__language" href={`/${otherLocale}`} hrefLang={otherLocale} onClick={() => { onLanguageChange(); close(); }}><Languages aria-hidden="true" />{locale === "en-GB" ? "Español" : "English"}</Link>
               <Link className="button button--primary" href="#early-access" onClick={close}>{copy.join}<ArrowUpRight aria-hidden="true" /></Link>
             </motion.div>
           </motion.div>

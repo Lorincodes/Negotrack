@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Manrope, Sometype_Mono } from "next/font/google";
+import { Analytics } from "@/components/analytics/analytics";
+import { analyticsConfig } from "@/lib/analytics/config";
 import "./globals.css";
 
 /**
@@ -35,13 +37,26 @@ const sometypeMono = Sometype_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://negotrack.com"),
+  metadataBase: new URL(analyticsConfig.siteUrl),
   title: "NegoTrack",
   description: "Understand what is holding your business back.",
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
     apple: [{ url: "/icon.svg", type: "image/svg+xml" }],
   },
+  // Per-page titles, descriptions and images are set in generateMetadata and
+  // inherited here, so the card follows whatever the page already declares.
+  twitter: {
+    card: "summary_large_image",
+    title: "NegoTrack",
+    description: "Understand what is holding your business back.",
+    images: ["/og-negotrack.svg"],
+  },
+  // Emitted only when the variable is set, so the tag never ships empty and no
+  // verification code is committed. Search Console supplies this value.
+  ...(analyticsConfig.gscVerification
+    ? { verification: { google: analyticsConfig.gscVerification } }
+    : {}),
 };
 
 const directionContract = `<!--
@@ -59,6 +74,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`${inter.variable} ${manrope.variable} ${sometypeMono.variable}`}>
         <template data-design-contract dangerouslySetInnerHTML={{ __html: directionContract }} />
         {children}
+        {/* Renders no markup. Loads after interactive, so it cannot block paint
+            or participate in hydration of the page above it. */}
+        <Analytics />
       </body>
     </html>
   );

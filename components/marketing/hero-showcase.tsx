@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type Reac
 import { useReducedMotion } from "framer-motion";
 import { Building2, Check, CheckCircle2, Gauge, Globe2, LineChart, Link2, ScanLine, Search, Smartphone, Sparkles, Star, TrendingDown, TrendingUp, type LucideIcon } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
+import { track } from "@/lib/analytics";
 import { DashboardPreview, useAmbientRegion } from "./ui";
 
 const tabIcons = [Gauge, Globe2, Search, Star, Building2, Sparkles];
@@ -70,7 +71,10 @@ export function HeroShowcase({ copy, children }: { copy: Dictionary; children: R
   const choose = useCallback((index: number) => {
     setSelected(index);
     setChosenManually(true);
-  }, []);
+    // Only deliberate selections are reported. The idle rotation advances
+    // through the same state and would otherwise flood the event stream.
+    track({ name: "feature_tab_changed", tab: panels[index]?.key ?? String(index), index });
+  }, [panels]);
 
   function onTabKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;

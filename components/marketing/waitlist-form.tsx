@@ -4,6 +4,7 @@ import { useEffect, useId, useMemo, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, ChevronDown, LoaderCircle, ShieldCheck } from "lucide-react";
 import type { Dictionary, Locale } from "@/lib/i18n";
+import { track } from "@/lib/analytics";
 
 type FormState = {
   email: string;
@@ -68,10 +69,13 @@ export function WaitlistForm({ locale, copy, businessTypes }: { locale: Locale; 
     if (Object.keys(nextErrors).length) {
       setErrors(nextErrors);
       setStatus("error");
+      // Field names only. The values the visitor typed are never reported.
+      track({ name: "form_validation_error", source: "early-access", fields: Object.keys(nextErrors).sort().join(",") });
       document.getElementById(nextErrors.email ? "waitlist-email" : "waitlist-privacy")?.focus();
       return;
     }
 
+    track({ name: "waitlist_submitted", source: "early-access" });
     setStatus("submitting");
     setErrors({});
     const query = new URLSearchParams(window.location.search);
@@ -96,14 +100,19 @@ export function WaitlistForm({ locale, copy, businessTypes }: { locale: Locale; 
       const response = await fetch("/api/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const result = (await response.json()) as ApiResponse;
       if (result.ok) {
-        setStatus(result.code === "already_registered" ? "duplicate" : "success");
+        const duplicate = result.code === "already_registered";
+        setStatus(duplicate ? "duplicate" : "success");
+        // A duplicate is a registration that already exists, not a failure.
+        track({ name: "waitlist_success", source: "early-access", duplicate });
         return;
       }
       const mapped = Object.fromEntries(Object.entries(result.fieldErrors ?? {}).map(([key, value]) => [key, Array.isArray(value) ? value[0] : value]));
       setErrors(mapped);
       setStatus("error");
+      track({ name: "waitlist_failure", source: "early-access", reason: result.code ?? "rejected" });
     } catch {
       setStatus("error");
+      track({ name: "waitlist_failure", source: "early-access", reason: "network" });
     }
   }
 

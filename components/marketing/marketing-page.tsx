@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, type CSSProperties, type FormEvent } from "react";
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, HeartHandshake, Languages, LockKeyhole, MapPin, ShieldCheck, Sparkles } from "lucide-react";
 import type { Dictionary, Locale } from "@/lib/i18n";
+import { track } from "@/lib/analytics";
 import { Navigation } from "./navigation";
 import { AvatarMark, Logo, Reveal, useAmbientRegion } from "./ui";
 import { HeroShowcase } from "./hero-showcase";
@@ -35,7 +36,11 @@ export function MarketingPage({ locale, dictionary: copy }: { locale: Locale; di
               <p className="hero__body"><span>{copy.hero.eyebrow}. </span>{copy.hero.body}</p>
               <HeroWaitlist copy={copy.hero} />
               <div className="hero__actions">
-                <Link className="button button--secondary" href="#how-it-works"><span><ArrowDown aria-hidden="true" /></span>{copy.hero.secondary}</Link>
+                <Link
+                  className="button button--secondary"
+                  href="#how-it-works"
+                  onClick={() => track({ name: "secondary_cta_clicked", label: copy.hero.secondary })}
+                ><span><ArrowDown aria-hidden="true" /></span>{copy.hero.secondary}</Link>
               </div>
               <div className="hero__proof">
                 <span className="hero__proof-avatars" aria-hidden="true"><AvatarMark index={0} /><AvatarMark index={1} /><AvatarMark index={2} /></span>
@@ -104,6 +109,8 @@ function HeroWaitlist({ copy }: { copy: Dictionary["hero"] }) {
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    track({ name: "hero_cta_clicked", label: copy.primary });
+    track({ name: "waitlist_submitted", source: "hero" });
     window.dispatchEvent(new CustomEvent("prefill-waitlist", { detail: email }));
     document.getElementById("early-access")?.scrollIntoView({
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
