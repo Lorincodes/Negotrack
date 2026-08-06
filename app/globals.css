@@ -107,7 +107,7 @@ template[data-design-contract] { display: none; }
 /* Navigation — a frosted pill floating over the page rather than a full-width bar. */
 .site-header { position: fixed; inset: 0 0 auto; z-index: 100; padding-top: 16px; transition: transform .28s ease; }
 .site-header.is-compact { transform: translateY(-8px); }
-@keyframes header-drop { from { opacity: 0; transform: translateY(-16px); } }
+@keyframes header-drop { from { opacity: .4; transform: translateY(-16px); } }
 .site-header .site-header__inner {
   width: min(1160px, calc(100% - 32px)); height: 70px; margin-inline: auto;
   display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
@@ -185,8 +185,8 @@ template[data-design-contract] { display: none; }
 [data-inview="true"] .hero__proof-avatars svg:nth-child(2) { animation-delay: .49s; }
 [data-inview="true"] .hero__proof-avatars svg:nth-child(3) { animation-delay: .56s; }
 [data-inview="true"] .hero__proof p { animation: proof-copy .32s var(--ease-out) .64s both; }
-@keyframes proof-avatar { from { opacity: 0; transform: translateX(-6px) scale(.82); } }
-@keyframes proof-copy { from { opacity: 0; transform: translateX(-4px); } }
+@keyframes proof-avatar { from { opacity: .4; transform: translateX(-6px) scale(.82); } }
+@keyframes proof-copy { from { opacity: .4; transform: translateX(-4px); } }
 
 .hero__mobile { margin-top: 24px; }
 .hero__mobile-label { display: block; color: var(--meta, #59667c); font-size: .72rem; font-weight: 600; }
@@ -285,12 +285,15 @@ template[data-design-contract] { display: none; }
 /* Clears the feature pills below: the console's bottom edge and the pill track are 22px apart. */
 .hero-chip--two { bottom: -8px; right: 40px; }
 
-.hero-chip--one { animation: chip-enter-left .46s var(--ease-out) 1.5s both; }
-.hero-chip--two { animation: chip-enter .42s var(--ease-out) 1.62s both; }
-@keyframes chip-enter { from { opacity: 0; transform: translateY(10px) scale(.96); } }
-@keyframes chip-enter-left { from { opacity: 0; transform: translateX(-14px); } }
-.is-ambient .hero-chip--one { animation: chip-enter-left .46s var(--ease-out) 1.5s both, chip-float-a 16s var(--ease-drift) 2s infinite alternate; }
-.is-ambient .hero-chip--two { animation: chip-enter .42s var(--ease-out) 1.62s both, chip-float-b 19s var(--ease-drift) 2.1s infinite alternate; }
+/* Entrance delays stay short: a chip held at its start frame for over a second
+   reads as a rendering fault rather than a sequence, and the start frame is
+   never fully transparent so nothing waits on a timer to become legible. */
+.hero-chip--one { animation: chip-enter-left .46s var(--ease-out) .5s both; }
+.hero-chip--two { animation: chip-enter .42s var(--ease-out) .62s both; }
+@keyframes chip-enter { from { opacity: .4; transform: translateY(10px) scale(.96); } }
+@keyframes chip-enter-left { from { opacity: .4; transform: translateX(-14px); } }
+.is-ambient .hero-chip--one { animation: chip-enter-left .46s var(--ease-out) .5s both, chip-float-a 16s var(--ease-drift) 2s infinite alternate; }
+.is-ambient .hero-chip--two { animation: chip-enter .42s var(--ease-out) .62s both, chip-float-b 19s var(--ease-drift) 2.1s infinite alternate; }
 @keyframes chip-float-a { to { transform: translateY(-3px); } }
 @keyframes chip-float-b { to { transform: translateY(2px); } }
 
@@ -831,7 +834,7 @@ template[data-design-contract] { display: none; }
 .trend-chart--draw[data-inview="true"] .trend-chart__line--average { animation: reveal-quiet .5s var(--ease-out) .45s both; }
 .trend-chart--draw[data-inview="true"] .trend-chart__point { animation: point-in .22s var(--ease-out) calc(.9s + var(--i) * 70ms) both; }
 @keyframes draw-business { from { stroke-dashoffset: var(--length-business); } }
-@keyframes point-in { from { opacity: 0; transform: scale(.7); transform-box: fill-box; transform-origin: center; } }
+@keyframes point-in { from { opacity: .4; transform: scale(.7); transform-box: fill-box; transform-origin: center; } }
 .score-ring[data-inview="true"] .score-ring__value { animation: ring-draw 1.2s var(--ease-out) both; }
 @keyframes ring-draw { from { stroke-dashoffset: var(--ring-length); } }
 
@@ -1121,6 +1124,65 @@ template[data-design-contract] { display: none; }
   .feature-card { grid-template-columns:1fr; }.feature-card__preview { min-height:150px;border-right:0;border-bottom:1px solid var(--border); }
   .recommendation-board,.competitor-board,.weekly-report { margin-inline:-4px; }
   .early-access { margin-inline:-2px; }
+}
+
+/* ── Mobile repair pass ───────────────────────────────────────────────────── */
+/* Findings from device-width QA at 375/390/430/440 in both locales. Each rule
+   below fixes a cause; none of them rely on clipping the body to hide a symptom. */
+
+@media (max-width: 900px) {
+  /* The floating header sits in the notch region on modern iPhones. env() only
+     resolves to a real value because layout.tsx declares viewport-fit=cover. */
+  .site-header { padding-top: max(10px, env(safe-area-inset-top, 0px)); }
+  /* Anchor jumps landed under the floating header: the old 112px was tuned for
+     the desktop bar, which is taller than the mobile one plus the inset. */
+  html { scroll-padding-top: calc(88px + env(safe-area-inset-top, 0px)); }
+  /* The drawer's last control cleared the home indicator only by luck. */
+  .mobile-nav { padding-bottom: max(22px, env(safe-area-inset-bottom, 0px)); }
+}
+
+@media (max-width: 680px) {
+  /* Pills escaped the rounded parent because the track was pulled 2px wider
+     than the card that frames it; the radius then clipped the first and last. */
+  .business-selector { margin-inline: 0; padding: 6px; }
+  .business-selector button { min-width: 0; }
+  .business-selector button span { min-width: 0; overflow-wrap: anywhere; }
+
+  /* A 999px radius describes a capsule only while the track is one row tall.
+     These two become multi-row grids here, where the same value resolves to a
+     wide ellipse and pushes the corner buttons outside their own container.
+     Panel radius restores a rectangle; the children nest one step inside it. */
+  .business-selector, .feature-tabs { border-radius: var(--radius-panel); }
+  .business-selector button, .feature-tabs button { border-radius: var(--radius-control); }
+  /* The active background is a separate layoutId element sitting at inset:0, so
+     it carries its own radius and has to follow the buttons it sits behind. */
+  .business-selector .tab-indicator, .feature-tabs .tab-indicator { border-radius: var(--radius-control); }
+
+  /* Carousel: give the track its own end padding so the final card can rest
+     fully inside the gutter instead of sitting half under the edge. */
+  .feature-grid { scroll-padding-inline: 0; }
+  .feature-grid::after { content: ""; flex: 0 0 2px; }
+
+  /* 38px is a comfortable pointer target and a poor thumb one. */
+  .feature-tabs button { min-height: 44px; }
+
+  /* The markets cards carried desktop proportions: a large centred medallion
+     over a mostly empty band. Align the mark to the copy beneath it instead. */
+  .market-panels { gap: 14px; }
+  .market-panel { grid-template-columns: 1fr; gap: 4px; padding: 24px 22px; }
+  .market-panel__map { width: 96px; justify-self: start; }
+  .market-panel h3 { margin-top: 8px; }
+  .market-panel ul { margin-top: 18px; }
+
+  /* Long uppercase labels were the one element still able to push a row wider
+     than its column. */
+  .demo-badge { min-width: 0; flex-wrap: wrap; }
+}
+
+@media (max-width: 430px) {
+  /* One gutter for the whole page. This step previously dropped to 16px while
+     every section above it used 20px, so nothing lined up down the edge. */
+  .container { width: calc(100% - 40px); }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,6 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Manrope, Sometype_Mono } from "next/font/google";
 import "./globals.css";
+
+/**
+ * `viewport-fit=cover` is what makes `env(safe-area-inset-*)` resolve to real values.
+ * Without it the floating header sits under the Dynamic Island on notched iPhones.
+ */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 /** Reading, navigation and controls. */
 const inter = Inter({
