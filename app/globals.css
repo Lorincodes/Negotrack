@@ -1280,11 +1280,14 @@ ul.guide__list { list-style: disc; }
 .check-card span { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; }
 .check-card svg { width: 15px; }
 .check-card p { color: var(--body); font-size: .91rem; line-height: 1.55; }
-.check-card--mint span { background: #e8f9f3; color: var(--green-strong); }
-.check-card--blue span { background: #eaf0ff; color: var(--blue); }
-.check-card--violet span { background: #f1ecff; color: var(--purple); }
-.check-card--teal span { background: #e6f8f9; color: var(--teal); }
-.check-card--amber span { background: #fdf3e3; color: var(--amber); }
+/* Tints are mixed from the documented accents rather than hardcoded as new
+   literals, so they stay tied to the palette instead of drifting away from it
+   the first time a token changes. */
+.check-card--mint span { background: color-mix(in srgb, var(--green) 12%, white); color: var(--green-strong); }
+.check-card--blue span { background: color-mix(in srgb, var(--blue) 10%, white); color: var(--blue); }
+.check-card--violet span { background: color-mix(in srgb, var(--purple) 10%, white); color: var(--purple); }
+.check-card--teal span { background: color-mix(in srgb, var(--teal) 10%, white); color: var(--teal); }
+.check-card--amber span { background: color-mix(in srgb, var(--amber) 12%, white); color: var(--amber); }
 
 .page-section__head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 .page-section__link { display: inline-flex; align-items: center; gap: 7px; color: var(--green-strong); font-size: .91rem; font-weight: 640; }
@@ -1303,7 +1306,7 @@ ul.guide__list { list-style: disc; }
 .page-cta .page-waitlist input { border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.06); color: white; }
 .page-cta .page-waitlist input::placeholder { color: rgba(255,255,255,.5); }
 .page-cta__points { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; margin: 14px 0 0; padding: 0; list-style: none; }
-.page-cta__points li { display: flex; align-items: center; gap: 7px; color: rgba(255,255,255,.72); font-size: .82rem; }
+.page-cta__points li { display: flex; align-items: center; gap: 7px; color: rgba(255,255,255,.72); font-size: .91rem; }
 .page-cta__points svg { width: 14px; color: var(--mint); }
 
 @media (max-width: 1240px) {
