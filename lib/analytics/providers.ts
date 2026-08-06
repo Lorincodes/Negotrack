@@ -1,4 +1,4 @@
-import { analyticsConfig, hasClarity, hasGoogleAnalytics } from "./config";
+import { analyticsConfig, hasClarity, hasDirectGa4, hasGtm } from "./config";
 import { hasAnalyticsConsent } from "./consent";
 import { eventParams, type AnalyticsEvent, type AnalyticsProvider } from "./events";
 
@@ -42,6 +42,29 @@ const googleAnalytics: AnalyticsProvider = {
 };
 
 /**
+ * Google Tag Manager.
+ *
+ * GTM's interface is the dataLayer, not a function call: tags inside the
+ * container listen for named events and read the rest of the pushed object as
+ * variables. Page views are pushed as an explicit event because a container
+ * cannot observe SPA navigation on its own — the History Change trigger exists,
+ * but relying on it would double-count against the explicit push here.
+ */
+const tagManager: AnalyticsProvider = {
+  id: "gtm",
+  pageView(url) {
+    const w = analyticsWindow();
+    if (!w?.dataLayer) return;
+    w.dataLayer.push({ event: "page_view", page_path: url, page_location: `${analyticsConfig.siteUrl}${url}` });
+  },
+  track(event) {
+    const w = analyticsWindow();
+    if (!w?.dataLayer) return;
+    w.dataLayer.push({ event: event.name, ...eventParams(event) });
+  },
+};
+
+/**
  * Microsoft Clarity.
  *
  * Clarity records sessions continuously and derives its own page views, so it
@@ -71,7 +94,8 @@ const clarity: AnalyticsProvider = {
 export function activeProviders(): AnalyticsProvider[] {
   if (!hasAnalyticsConsent()) return [];
   const providers: AnalyticsProvider[] = [];
-  if (hasGoogleAnalytics) providers.push(googleAnalytics);
+  if (hasDirectGa4) providers.push(googleAnalytics);
+  if (hasGtm) providers.push(tagManager);
   if (hasClarity) providers.push(clarity);
   return providers;
 }

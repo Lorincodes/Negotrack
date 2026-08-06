@@ -10,7 +10,8 @@ property data.
 | Variable | Required | Purpose |
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Yes | Canonical origin for metadata, sitemap, canonical URLs and OG tags |
-| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | Google Analytics 4 measurement ID |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | Google Analytics 4 measurement ID (`G-…`) |
+| `NEXT_PUBLIC_GTM_CONTAINER_ID` | Optional | Google Tag Manager container (`GTM-…`) |
 | `NEXT_PUBLIC_CLARITY_PROJECT_ID` | Optional | Microsoft Clarity project ID |
 | `NEXT_PUBLIC_GSC_VERIFICATION` | Optional | Google Search Console verification token |
 
@@ -32,6 +33,40 @@ apex to `www`, so it should be `https://www.negotrack.com`.
 streams** → select (or create) the web stream → the **Measurement ID** at top
 right, formatted `G-XXXXXXXXXX`. This is *not* the "Stream ID" (numeric) or the
 older `UA-` property ID.
+
+**`NEXT_PUBLIC_GTM_CONTAINER_ID`** — tagmanager.google.com → your container →
+the ID beside the container name, formatted `GTM-XXXXXXX`.
+
+### GA4 or Tag Manager — pick one path
+
+These are different products and the IDs are not interchangeable. A GA4
+measurement ID looks like `G-XXXXXXXXXX`; a Tag Manager container looks like
+`GTM-XXXXXXX`.
+
+Tag Manager is a container that usually *holds* a GA4 tag. If the direct GA4
+integration and a container holding GA4 both ran, the property would receive
+every page view and event twice. So **when `NEXT_PUBLIC_GTM_CONTAINER_ID` is
+set, the direct GA4 tag stands down automatically** and GA4 is expected to be
+configured inside the container. Setting both is safe — the code resolves it —
+but the GA4 variable then does nothing.
+
+Which to choose:
+
+- **Tag Manager** if you want to add or change tags without redeploying, or
+  plan to run several tools. You configure GA4 as a tag inside it.
+- **Direct GA4** if GA4 is all you need. Fewer moving parts and one less
+  script.
+
+Either way the events in section 7 are emitted the same. With a container they
+arrive on the `dataLayer` as named events — build GA4 tags in the container
+using **Custom Event** triggers matching those names.
+
+**Note on the GTM `<noscript>` snippet.** Tag Manager gives you two pieces: a
+script for `<head>` and a `<noscript>` iframe for the top of `<body>`. Only the
+script is installed here. The iframe exists to track visitors with JavaScript
+disabled, but those visitors cannot be shown the consent banner or record an
+answer, so firing it would track them without consent — the one thing the gate
+exists to prevent. It is deliberately omitted.
 
 **`NEXT_PUBLIC_CLARITY_PROJECT_ID`** — clarity.microsoft.com → your project →
 **Settings** → **Overview** → **Project ID**. A short lowercase alphanumeric
