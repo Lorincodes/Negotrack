@@ -1141,6 +1141,36 @@ template[data-design-contract] { display: none; }
   .early-access { margin-inline:-2px; }
 }
 
+/* ── Guides ───────────────────────────────────────────────────────────────── */
+/* Reading surfaces, so the measure is capped near 70ch rather than filling the
+   container, and the lead answer is set slightly larger than body text to mark
+   it as the answer without introducing a new type step. */
+.guide__crumbs { margin-top: 28px; font-size: .78rem; font-weight: 620; }
+.guide__crumbs a { color: var(--meta); text-decoration: underline; text-underline-offset: 3px; }
+.guide__crumbs a:hover, .guide__crumbs a:focus-visible { color: var(--heading); }
+
+.guide__answer { max-width: 68ch; margin-top: 18px; color: var(--heading); font-size: 1.08rem; line-height: 1.65; font-weight: 500; }
+.guide__meta { margin-top: 14px; color: var(--muted); font-family: var(--font-mono), ui-monospace, monospace; font-size: .69rem; letter-spacing: .02em; }
+
+.guide__section { margin-top: 38px; }
+.guide__section h2 { font-size: 1.25rem; letter-spacing: -0.028em; }
+.guide__section h3 { margin-top: 22px; font-size: 1rem; }
+.guide__section p { max-width: 68ch; }
+
+.guide__list { max-width: 68ch; margin: 16px 0 0; padding-left: 20px; display: grid; gap: 10px; }
+.guide__list li { color: var(--body); font-size: .95rem; line-height: 1.65; }
+.guide__list li::marker { color: var(--green-strong); font-weight: 700; }
+
+.guide-index { max-width: 68ch; margin: 30px 0 0; padding: 0; list-style: none; display: grid; gap: 2px; }
+.guide-index li { border-top: 1px solid var(--border); }
+.guide-index li:last-child { border-bottom: 1px solid var(--border); }
+.guide-index a { display: block; padding: 22px 4px; }
+.guide-index h2 { display: flex; align-items: baseline; gap: 8px; color: var(--heading); font-size: 1.25rem; letter-spacing: -0.028em; }
+.guide-index svg { width: 15px; flex: 0 0 auto; color: var(--green-strong); transition: transform .18s var(--ease-out); }
+.guide-index a:hover h2, .guide-index a:focus-visible h2 { color: var(--green-strong); }
+.guide-index a:hover svg, .guide-index a:focus-visible svg { transform: translate(3px, -3px); }
+.guide-index p { margin-top: 6px; color: var(--body); font-size: .88rem; line-height: 1.6; }
+
 /* ── Analytics consent ────────────────────────────────────────────────────── */
 /* A floating panel on the same hairline-and-soft-shadow system as the product
    canvases, not a full-width bar pinned to the edge. Accept and decline use the

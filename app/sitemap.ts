@@ -1,5 +1,8 @@
 import type { MetadataRoute } from "next";
 
+import { guidesForLocale } from "@/lib/guides";
+import { locales } from "@/lib/i18n";
+
 /**
  * A sitemap is a list of the pages worth ranking, not an inventory of every URL
  * that resolves. Pages that are deliberately kept out of the index — pricing,
@@ -37,10 +40,21 @@ const identityByLocale: Record<string, string> = {
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.negotrack.com";
 
-  return ["en-GB", "es-ES"].flatMap((locale) => {
+  return locales.flatMap((locale) => {
+    const published = guidesForLocale(locale);
     const entries: Entry[] = [
       ...shared,
       { path: identityByLocale[locale], date: LAST_MODIFIED.identity, changeFrequency: "monthly", priority: 0.9 },
+      // The index only earns a place once it has something to list.
+      ...(published.length
+        ? [{ path: "/guides", date: LAST_MODIFIED.home, changeFrequency: "weekly" as const, priority: 0.7 }]
+        : []),
+      ...published.map((guide) => ({
+        path: `/guides/${guide.slug}`,
+        date: guide.updated,
+        changeFrequency: "monthly" as const,
+        priority: 0.8,
+      })),
     ];
     return entries.map((entry) => ({
       url: `${base}/${locale}${entry.path}`,

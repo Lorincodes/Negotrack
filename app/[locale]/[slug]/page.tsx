@@ -196,19 +196,9 @@ const pages: Record<string, PageEntry> = {
       body: ["NegoTrack está en desarrollo. Únete a la lista de la beta privada para conocer el acceso anticipado y los planes de lanzamiento."],
     },
   },
-  guides: {
-    noindex: true,
-    en: {
-      title: "Guides",
-      lead: "Understand the digital signals behind your business.",
-      body: ["Our first guides will cover website clarity, local visibility, reviews, performance and competitor context."],
-    },
-    es: {
-      title: "Guías",
-      lead: "Entiende las señales digitales de tu negocio.",
-      body: ["Las primeras guías tratarán claridad web, visibilidad local, reseñas, rendimiento y contexto competitivo."],
-    },
-  },
+  // `guides` is no longer here: it now has a real index at
+  // app/[locale]/guides/page.tsx listing published articles, and that route
+  // takes precedence over this catch-all slug.
   help: {
     noindex: true,
     en: {
