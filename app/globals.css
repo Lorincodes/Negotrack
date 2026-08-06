@@ -1145,11 +1145,13 @@ template[data-design-contract] { display: none; }
 /* Reading surfaces, so the measure is capped near 70ch rather than filling the
    container, and the lead answer is set slightly larger than body text to mark
    it as the answer without introducing a new type step. */
-.guide__crumbs { margin-top: 28px; font-size: .78rem; font-weight: 620; }
+.guide__crumbs { margin-top: 28px; font-size: .91rem; font-weight: 620; }
 .guide__crumbs a { color: var(--meta); text-decoration: underline; text-underline-offset: 3px; }
 .guide__crumbs a:hover, .guide__crumbs a:focus-visible { color: var(--heading); }
 
-.guide__answer { max-width: 68ch; margin-top: 18px; color: var(--heading); font-size: 1.08rem; line-height: 1.65; font-weight: 500; }
+/* Body size on purpose. The lead answer is marked out by weight, colour and
+   measure rather than by inventing a type step between body and title. */
+.guide__answer { max-width: 68ch; margin-top: 18px; color: var(--heading); font-size: 1rem; line-height: 1.65; font-weight: 560; }
 .guide__meta { margin-top: 14px; color: var(--muted); font-family: var(--font-mono), ui-monospace, monospace; font-size: .69rem; letter-spacing: .02em; }
 
 .guide__section { margin-top: 38px; }
@@ -1157,8 +1159,18 @@ template[data-design-contract] { display: none; }
 .guide__section h3 { margin-top: 22px; font-size: 1rem; }
 .guide__section p { max-width: 68ch; }
 
-.guide__list { max-width: 68ch; margin: 16px 0 0; padding-left: 20px; display: grid; gap: 10px; }
-.guide__list li { color: var(--body); font-size: .95rem; line-height: 1.65; }
+/* Tailwind's preflight strips list markers globally, which is right for the
+   product UI and wrong here: a checklist headed "the ten checks" has to be
+   numbered to mean anything. Restored explicitly, and laid out as a block
+   rather than a grid because list markers are not reliably painted for grid
+   children across browsers. */
+/* Wide enough for a two-digit marker: these checklists routinely reach ten
+   items, and at 22px the "10." sits half outside the padding box. */
+.guide__list { max-width: 68ch; margin: 16px 0 0; padding-left: 34px; display: block; }
+ol.guide__list { list-style: decimal; }
+ul.guide__list { list-style: disc; }
+.guide__list li + li { margin-top: 10px; }
+.guide__list li { color: var(--body); font-size: 1rem; line-height: 1.65; }
 .guide__list li::marker { color: var(--green-strong); font-weight: 700; }
 
 .guide-index { max-width: 68ch; margin: 30px 0 0; padding: 0; list-style: none; display: grid; gap: 2px; }
