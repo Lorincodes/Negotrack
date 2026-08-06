@@ -20,7 +20,7 @@ const en = {
     close: "Close navigation",
   },
   hero: {
-    eyebrow: "AI-powered business intelligence for small businesses",
+    eyebrow: "AI-powered business health monitoring for small businesses",
     lineOne: "Know exactly what’s holding your",
     emphasis: "business back.",
     body: "NegoTrack brings your website, visibility, reviews and competitors together, then turns the data into clear actions your business can actually use.",
@@ -413,7 +413,7 @@ const en = {
     countries: [["GB", "United Kingdom"], ["ES", "España"]],
   },
   footer: {
-    summary: "AI-powered business intelligence for small businesses in the UK and Spain.",
+    summary: "AI-powered business health monitoring for small businesses in the UK and Spain. NegoTrack is not negotiation software; the name comes from the Spanish word “negocio”.",
     product: "Product",
     solutions: "Solutions",
     resources: "Resources",
@@ -451,7 +451,7 @@ const es: Localized<typeof en> = {
   languageSwitch: "English",
   navigation: { product: "Producto", solutions: "Soluciones", how: "Cómo funciona", pricing: "Precios", resources: "Recursos", join: "Únete a la lista", menu: "Abrir navegación", close: "Cerrar navegación" },
   hero: {
-    eyebrow: "Inteligencia de negocio con IA para pequeñas empresas",
+    eyebrow: "Seguimiento de la salud digital con IA para pequeñas empresas",
     lineOne: "Descubre exactamente qué está frenando",
     emphasis: "tu negocio.",
     body: "NegoTrack reúne tu web, visibilidad, reseñas y competidores, y convierte esos datos en acciones claras que tu negocio realmente puede aplicar.",
@@ -736,7 +736,7 @@ const es: Localized<typeof en> = {
     title: "Únete a la lista de la beta privada", body: "Dinos dónde estás y cómo quieres recibir noticias.", email: "Correo de trabajo", emailPlaceholder: "tu@negocio.es", name: "Nombre", business: "Nombre del negocio", website: "URL de la web", country: "País", language: "Idioma preferido", type: "Tipo de negocio", challenge: "Mayor reto de crecimiento digital", privacy: "Acepto que NegoTrack guarde estos datos para gestionar mi registro en la lista.", marketing: "Enviadme actualizaciones ocasionales del producto. (Opcional)", submit: "Unirme a la lista", submitting: "Registrando…", optional: "Añadir datos opcionales del negocio", success: "Ya estás en la lista de NegoTrack. Te mantendremos al día.", duplicate: "Ya formas parte de la lista de NegoTrack. Te mantendremos al día.", error: "No hemos podido guardar tu registro. Revisa el formulario e inténtalo de nuevo.", privacyError: "Acepta el aviso de privacidad para unirte a la lista.", emailError: "Introduce un correo válido.", countries: [["GB", "Reino Unido"], ["ES", "España"]],
   },
   footer: {
-    summary: "Inteligencia de negocio con IA para pequeñas empresas del Reino Unido y España.", product: "Producto", solutions: "Soluciones", resources: "Recursos", company: "Empresa", stay: "Mantente al día", stayBody: "Recibe novedades e invitaciones de acceso anticipado.", email: "Tu correo",
+    summary: "Seguimiento de la salud digital con IA para pequeñas empresas del Reino Unido y España. NegoTrack no es un software de negociación; el nombre viene de la palabra “negocio”.", product: "Producto", solutions: "Soluciones", resources: "Recursos", company: "Empresa", stay: "Mantente al día", stayBody: "Recibe novedades e invitaciones de acceso anticipado.", email: "Tu correo",
     links: { overview: "Resumen", features: "Funciones", how: "Cómo funciona", early: "Acceso anticipado", small: "Pequeñas empresas", agencies: "Agencias", local: "Negocios locales", uk: "Reino Unido", spain: "España", blog: "Blog", guides: "Guías", help: "Centro de ayuda", status: "Estado", about: "Acerca de", contact: "Contacto", privacy: "Privacidad", terms: "Términos" },
     rights: "© 2026 NegoTrack. Todos los derechos reservados.",
   },

@@ -1,0 +1,38 @@
+# NegoTrack
+
+> NegoTrack is a business-health and digital-growth monitoring platform for small
+> businesses in the United Kingdom and Spain. It brings website health, search
+> visibility, page speed, mobile usability, reviews, local presence and competitor
+> signals into one plain-language view, and turns them into an ordered list of
+> what to fix first.
+>
+> NegoTrack is NOT negotiation software, sales software or a contract-management
+> tool. The name comes from the Spanish word "negocio" (business) combined with
+> "track" (to monitor over time). An unrelated product with a similar name exists;
+> this is not it.
+>
+> Status: pre-launch. The waiting list is open; the private beta has not started.
+> No live scanning service is operating. Every product figure shown on the site is
+> clearly labelled demonstration data, not real customer or usage data.
+
+## Identity
+
+- [What is NegoTrack?](https://www.negotrack.com/en-GB/what-is-negotrack): Definition, name origin, and what NegoTrack is not
+- [¿Qué es NegoTrack?](https://www.negotrack.com/es-ES/que-es-negotrack): Definición, origen del nombre y qué no es NegoTrack
+
+## Company
+
+- [About](https://www.negotrack.com/en-GB/about): Why NegoTrack exists, markets, current stage
+- [Acerca de](https://www.negotrack.com/es-ES/about): Por qué existe NegoTrack, mercados y estado actual
+- [Contact](https://www.negotrack.com/en-GB/contact)
+- [Contacto](https://www.negotrack.com/es-ES/contact)
+
+## Product
+
+- [Home (English)](https://www.negotrack.com/en-GB): Product overview and waiting list
+- [Inicio (Español)](https://www.negotrack.com/es-ES): Descripción del producto y lista de espera
+
+## Legal
+
+- [Privacy](https://www.negotrack.com/en-GB/privacy)
+- [Terms](https://www.negotrack.com/en-GB/terms)

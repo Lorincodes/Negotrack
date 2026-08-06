@@ -85,7 +85,12 @@ template[data-design-contract] { display: none; }
 .skip-link { position: fixed; top: 10px; left: 10px; z-index: 999; transform: translateY(-160%); background: var(--dark); color: white; padding: 10px 16px; border-radius: 8px; }
 .skip-link:focus { transform: translateY(0); }
 
-.logo-wordmark { display: inline-flex; align-items: baseline; color: var(--heading); font-family: var(--font-display), sans-serif; font-weight: 700; letter-spacing: -0.045em; font-size: 1.28rem; }
+/* Deliberately inline, not inline-flex. Flex blockifies the inner span, which
+   makes text extraction read the wordmark as two words ("Nego Track") even
+   though textContent is correct — and a brand token that splits is exactly what
+   this name cannot afford. Two inline spans in the same face align on the
+   baseline naturally, so nothing is lost visually. */
+.logo-wordmark { display: inline; color: var(--heading); font-family: var(--font-display), sans-serif; font-weight: 700; letter-spacing: -0.045em; font-size: 1.28rem; }
 .logo-wordmark > span { color: var(--green-strong); }
 .logo-wordmark--inverted { color: white; }
 
