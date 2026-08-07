@@ -6,6 +6,8 @@ import { Navigation } from "@/components/marketing/navigation";
 import { Footer } from "@/components/marketing/footer";
 import { CapabilityConsole, CheckGrid, PageCards, PageCta, PageHero, PageWaitlist } from "@/components/marketing/page-sections";
 import { Reveal } from "@/components/marketing/ui";
+import { CapabilityStoryPage } from "./story-page";
+import { findStory } from "@/lib/capability-story";
 import { capabilities, capabilitiesForLocale, findCapability, panelForCapability } from "@/lib/capabilities";
 import { findGuide } from "@/lib/guides";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
@@ -79,6 +81,22 @@ export default async function CapabilityPage({ params }: PageProps) {
       })),
     },
   ];
+
+  // Capabilities with a long-form story render the editorial page; the rest
+  // keep the shorter template until their story is written.
+  const story = findStory(locale, slug);
+  if (story) {
+    return (
+      <CapabilityStoryPage
+        story={story}
+        capability={capability}
+        siblings={siblings}
+        locale={locale}
+        dictionary={dictionary}
+        schema={schema}
+      />
+    );
+  }
 
   return (
     <div className="site-shell" data-locale={locale}>
